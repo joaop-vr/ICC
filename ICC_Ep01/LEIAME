@@ -1,0 +1,100 @@
+# EP-01 - Representação Numérica e Erros
+Este exercício tem como objetivo representar valores reais como intervalos para a realização de operações básicas em vez de utilizar aproximações. Assim, operações sobre esses números resultam em intervalos que carregam os erros numéricos de forma explícita.
+
+## Índice
+
+* [Autores]
+* [Descrição]
+* [O_Programa]
+* [Limitações]
+
+## Autores
+Heloisa Benedet Mendes - 20221248
+Joao Pedro Vicente Ramalho - 20224169
+
+## Descrição
+
+O programa recebe, inicialmente, uma expressão numérica do formato
+X1 O1 X2 O2 X3 O3 X4 O4 X5
+Na qual Xi é um número real e Oi é um caractere indicando uma operação básica (+, -, *, /).
+Essa expressão é resolvida respeitando a seguinte ordem
+(((X1 O1 X2) O2 X3) O3 X4) O4 X5
+A cada operação realizada, é indicado o resultado da expressão no formato intervalar [a, b], o Erro Absoluto (EA), o Erro Relativo (ER) e a quantidade de ULPs entre as representações de a e b calculados.
+
+## O Programa
+
+Compartimentado em 4 bibliotecas (auxiliares.h, calculoErros.h, estruturas.h e principais.h), o processo se inicia, como de praxe,na função main (main.c).
+
+# Estruturas
+    <estruturas.h>
+
+    As estruturas de dados usadas neste exercício estão definidas do arquivo estruturas.h:
+    struct operandos: Com as instâncias float num, float anterior e float posterior, sua função é definir um intervalo [anterior, posterior] ao qual num pertença, onde anterior é o maior número representável menor que num, e posterior é o menor número representável maior que num.
+    typedef union Float_t: Tem como objetivo manipular os bits de um float de forma precisa.
+
+# Main
+    <main.c>
+
+    Nesta função, são criados os vetores de valores de tamanho 5 e operadores de tamanho 4, que terão seus valores atribuídos na função auxiliares.obterExpressao().
+    São calculados, em seguida, o intervalo que contém cada um dos itens do vetor de valores da seguinte forma:
+    Xi, Xi+1
+    usando a função principais.calcularIntervalo(), para então ser calculada a operação Oi, com a função principais.calcularOperacao(), que retornará um intervalo para Xi+1.
+    Isso é feito de formar iterativa até a última operação, ou seja, O4.
+
+# Principais
+    <principais.h / principais.c>
+
+    calcularIntervalo():
+    Tem como parâmetro um float e retorna uma struct operandos com o intervalo [anterior, superior] ao qual o float pertence.
+    Estabelece o arredondamento para baixo e utiliza a função nextafter para estabelecer anterior, depois, estabelece o arredonandamento para cima e repete o processo para o posterior.
+
+    calcularOperacao():
+    Seus parâmetros são as structs operandos x e y, e o caractere do operador, retorna a struct resultado.
+    A função é constituída, basicamente, por um switch para o operador, de forma a selecionar a operação correta.
+    As operações são realizadas da seguinte forma:
+    X + Y = [a+c, b+d]
+    X - Y = [a-d, b-c]
+    X * Y = [a,b] * [c,d]  =  [min{a*c,a*d,b*c,b*d}, max{a*c,a*d,b*c,b*d}]
+    X / Y = [a,b] * [1/d,1/c], se 0 não pertence ao intervalo Y
+    E, de forma geral, para o cálculo do resultado.anterior, é estabelecido o arredondamento para baixo, e para o resultado.posterior, arredondamento para cima. São usadas no processo as funções auxiliares.min() e auxiliares.max().
+    O maior detalhe está na operação de divisão '/'. Caso o intervalo do divisor tenha sinais opostos, o número 0 está compreendido no intervalo, logo, a divisão é indevida. Nesse caso, o intervalo resultado é definido como [-inf, inf].
+    A verificação do sinal é feita utilizando a estrutura Float_t.
+    Por fim, a função imprime o intervalo resultante.
+
+# Calculo de Erros
+    <calculoErros.h / calculoErros.c>
+
+    Todas as funções tem como parâmetro único a struct operandos resultante da última operação realizada.
+
+    calcularEA():
+    Retorna o Erro Absoluto (float) do intervalo resultante.
+    Usa a função fabs() para obter a diferença em módulo entre a e b, sendo o intervalo passado [a, b].
+
+    calcularER():
+    Retorna o Erro Relativo (float) do intervalo.
+    Faz uso da mesma função fabs(). Se a, do intervalo [a, b], for diferente de 0, retorna (b-a)/a, senão retorna (b-a).
+
+    calcularULPs():
+    Retorna a diferença absoluta entre as partes inteiras de a e b, [a, b].
+    Utiliza a função abs() e a estrutura Float_t para manipular a parte inteira dos números.
+
+# Auxiliares
+    <auxiliare.h / auxiliares.c>
+
+    obterExpressao():
+    Manipula diretamente os vetores valores[5] e operadores[4], que são passados como parâmetros.
+    Lê a expressão passada em forma de string, depois a quebra e separa corretamente entre os vetores.
+
+    imprimir():
+    É chamada ao fim de cada operação, recebe as structs dos operandos, do resultado e o caractere do operador como parâmetros.
+    Imprime na saída padrão a expressão que acaba de ser resolvida e seu resultado. Depois, calcula e imprime os EA, ER e ULPs.
+
+    max() e min():
+    Recebem um vetor de floats de 4 posições como parâmetro.
+    De forma semelhante, calculam o maior e o menor número presente no vetor levando em consideração a diferença absoluta entre o número sendo analisado e o maior/menor número encontrado até então.
+
+
+## Limitações
+
+A princípio tentamos obter os mesmos resultados dos testes fornecidos na descrição do trabalho. Contudo, para apenas um caso de teste, observamos leves variações nos limites superiores e inferiores obtidos.
+A diferença, apesar de mínima (oitava casa decimal), interferiu na precisão do cálculo de erro (EA, ER e ULPs).
