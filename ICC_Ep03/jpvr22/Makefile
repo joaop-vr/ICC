@@ -1,7 +1,7 @@
 LIKWID_HOME=/usr/local
 CFLAGS="-I${LIKWID_HOME}/include -DLIKWID_PERFMON"
 LFLAGS="-L${LIKWID_HOME}/lib -llikwid"
-parametrosCompilacao = -lm -O3 -mavx -march=native -I${LIKWID_HOME}/include -DLIKWID_PERFMON -L${LIKWID_HOME}/lib -llikwid
+parametrosCompilacao = -lm -O3 -mavx -march=native -I${LIKWID_HOME}/include -L${LIKWID_HOME}/lib -llikwid
 nomePrograma = interpola
 objs = main.o auxiliares.o metodosInterpol.o
 

@@ -3,15 +3,23 @@
 METRICA="FLOPS_DP"
 CPU="3"
 
-LIKWID_HOME=/usr/local
-CFLAGS="-I${LIKWID_HOME}/include -DLIKWID_PERFMON"
-LFLAGS="-L${LIKWID_HOME}/lib -llikwid"
+parametrosCompilacao="-lm -O3 -mavx -march=native -I${LIKWID_HOME}/include -DLIKWID_PERFMON -L${LIKWID_HOME}/lib -llikwid"
+nomePrograma="interpola"
+
+make purge
+gcc -o ${nomePrograma} codigos/main.c codigos/auxiliares.c codigos/auxiliares.h codigos/metodosInterpol.c codigos/metodosInterpol.h ${parametrosCompilacao}
 
 # Verifica se pelo menos um argumento foi passado
 if [ $# -lt 1 ]; then
   echo "Uso: $0 <argumento_para_interpola>"
   exit 1
 fi
+
+# Listar todos os argumentos passados pelo usuário
+echo "Argumentos passados:"
+for arg in "$@"; do
+  echo "$arg"
+done
 
 # Obtém o ponto Xe passado pelo usuário
 Pxe="$1"
