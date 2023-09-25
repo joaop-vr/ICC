@@ -3,9 +3,11 @@
 METRICA="FLOPS_DP"
 CPU="3"
 
+LIKWID_HOME=/home/soft/likwid
 parametrosCompilacao="-lm -O3 -mavx -march=native -I${LIKWID_HOME}/include -DLIKWID_PERFMON -L${LIKWID_HOME}/lib -llikwid"
 nomePrograma="interpola"
 
+# Apaga o executável pré-existente
 make purge
 gcc -o ${nomePrograma} codigos/main.c codigos/auxiliares.c codigos/auxiliares.h codigos/metodosInterpol.c codigos/metodosInterpol.h ${parametrosCompilacao}
 
@@ -14,12 +16,6 @@ if [ $# -lt 1 ]; then
   echo "Uso: $0 <argumento_para_interpola>"
   exit 1
 fi
-
-# Listar todos os argumentos passados pelo usuário
-echo "Argumentos passados:"
-for arg in "$@"; do
-  echo "$arg"
-done
 
 # Obtém o ponto Xe passado pelo usuário
 Pxe="$1"
@@ -37,8 +33,6 @@ if [ -n "$3" ]; then
 else
   saida="/dev/stdout"  # Usar saída padrão se nenhum arquivo for especificado
 fi
-
-make # só pra garantir que tenha o executável
 
 for k in $METRICA
 do
@@ -58,15 +52,18 @@ do
     # Imprime MFLOPs para cada método de eliminação
     echo "" >> outputFiltrado.log
     echo "A quantidade de MFLOP/s para os métodos 1 e 2 - respectivamente:" >> outputFiltrado.log
-    grep -F "|     DP [MFLOP/s]     |" aux2.log >> outputFiltrado.log
+    grep -F "|      DP MFLOP/s      |" aux2.log >> outputFiltrado.log
 
     if [ -n "${saida}" ]; then
-        cp outputFiltrado.log "${saida}"
+      cp outputFiltrado.log "${saida}"
     else
-        cat outputFiltrado.log
+      cat outputFiltrado.log
     fi
 
 done
+
+# Apaga o executavel
+make purge
 
 # Apaga os arquivos auxiliares
 rm -f aux1.log aux2.log outputFiltrado.log
