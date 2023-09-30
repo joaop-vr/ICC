@@ -5,9 +5,7 @@
 ****************************/
 
 #include "operaEstrutura.h"
-#include "calculoIntervalar.h"
 #include "estruturas.h"
-#include <stdlib.h>
 
 int main() {
 
