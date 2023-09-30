@@ -24,7 +24,7 @@ struct operandos calcularIntervalo (double num) {
 
 }
 
-struct operandos calcularOperacao (struct operandos x, struct operandos y, char operador) {
+struct operandos calcularOperacao (struct operandos x, struct operandos y, int expoente, char operador) {
 
     struct operandos resultado;
     
@@ -118,6 +118,59 @@ struct operandos calcularOperacao (struct operandos x, struct operandos y, char 
 
                 resultado.posterior = max(aux);
             }
+
+            break;
+        }
+
+        case '^': {
+
+            Float_t a;
+            Float_t b;
+            a.f = x.anterior;
+            b.f = x.posterior;
+            double baseAnt, basePost;
+
+            if (expoente == 0) {   //  [1,1], se expoente = 0 
+                resultado.num = 1;
+                resultado.anterior = 1;
+                resultado.posterior = 1;
+                break;
+            }
+            else if ((expoente % 2) != 0) {    // [a^expoente,b^expoente], se expoente é ímpar
+                baseAnt = x.anterior;
+                basePost = x.posterior;
+            }
+            else if (a.parts.sign == 0) {      //  [a^expoente,b^expoente], se expoente é par e a ≥ 0
+                baseAnt = x.anterior;
+                basePost = x.posterior;
+            }
+            else if (b.parts.sign == 1) {      // [b^expoente,a^expoente], se expoente é par e b < 0
+                baseAnt = x.posterior;
+                basePost = x.anterior;
+            }
+            else if ((a.parts.sign == 1) && (b.parts.sign == 0)) {  // [0,max{a^expoente,b^expoente}], se expoente é par e a < 0 ≤ b 
+                
+                double max, aExp, bExp;
+
+                aExp = (double) pow(x.anterior, expoente);
+                bExp = (double) pow(x.posterior, expoente);
+
+                max = ((aExp - bExp) > FLT_EPSILON) ? aExp : bExp;
+
+                resultado.num = (double) pow(x.num, expoente);
+                resultado.anterior = 0;
+                resultado.posterior = max;
+
+                break;
+            }
+
+            resultado.num = (double) pow(x.num, expoente);
+
+            fesetround(FE_DOWNWARD);
+            resultado.anterior = (double) pow(baseAnt, expoente);
+
+            fesetround(FE_UPWARD);
+            resultado.posterior = (double) pow(basePost, expoente);
 
             break;
         }

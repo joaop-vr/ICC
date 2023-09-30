@@ -15,7 +15,7 @@
 
 struct operandos calcularIntervalo (double num);
 
-struct operandos calcularOperacao (struct operandos x, struct operandos y, char operador);
+struct operandos calcularOperacao (struct operandos x, struct operandos y, int expoente, char operador);
 
 
 #endif
