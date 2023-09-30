@@ -1,14 +1,14 @@
+/***************************
+ * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
+ * Aluno:  , GRR:
+ * 
+****************************/
+
 #ifndef ESTRUTURAS_H
 #define ESTRUTURAS_H
 
 #include <stdio.h>
 #include <stdint.h>
-
-struct operandos {
-    double num;
-    double anterior;
-    double posterior;
-};
 
 typedef union
 {
@@ -22,27 +22,55 @@ typedef union
     } parts;
 } Float_t;
 
+
 /***************************
- * Stuct sistemaLinear corresponde a todos os componentes de um sistema linear AX = B de ordem N
+ * Struct struct operandos corresponde a estrutura de dados que contém 
+ * o valor dos pontos e o intervalo em que estão inseridos
  * 
- * N = int ordem
- * A = double** matriz
- * B = double* constantes
- * X = double* solucoes
+ * num = número (double) passado pelo usuário
+ * anterior = limite inferior do intervalo
+ * posterior = limite superior do intervalo
  * 
- * O componente "struct sistemaLinear* backup" servirá para que possamos solucionar o sistema
- * mais de uma vez
+****************************/
+struct operandos {
+    double num;
+    double anterior;
+    double posterior;
+};
+
+
+/***************************
+ * Struct tabPontos corresponde á tabela de pontos com a qual trabalharemos
  * 
- * O componente "double* residuos" será utilizado na hora de contabilizar 
- * o resíduo do sistema
+ * qntdPontos = quantidade de pontos da tabela
+ * vetPontos = vetor com os pontos
+ * 
+ * O componente "struct operandos* vetPontos" está organizado de forma que:
+ * X0 e Y0 estão nos indices 0 e 1 do vetor
+ * X1 e Y1 estão nos indices 2 e 3 do vetor
+ * X2 e Y2 estão nos indices 4 e 5 do vetor
+ * (...)
+ * Xi e Yi estão nos indices 2*i e 2*i+1
+ * 
+****************************/
+struct tabPontos {
+    int qntdPontos;
+    struct operandos* vetPontos;
+};
+
+
+/***************************
+ * Stuct sistemaLinear <AINDA EM DESENVOLVIMENTO>
  * 
 ****************************/
 struct sistemaLinear {
-    int ordem;
-    double** matriz;        
+    int grauPolinomio;
+    /*double** matriz;        
     double* constantes;
     double* solucoes;
-    double* residuos;
+    double* residuos;*/
+    struct operandos* coeficientes;
+    struct tabPontos* tabela;
 };
 
 #endif
