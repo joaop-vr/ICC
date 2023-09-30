@@ -11,6 +11,7 @@
 #include <fenv.h>
 #include <math.h>
 #include "estruturas.h"
+#include "auxiliares.h"
 
 struct operandos calcularIntervalo (double num);
 

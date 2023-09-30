@@ -43,7 +43,7 @@ void preencherEstrutura(struct sistemaLinear* sistema) {
     double valor;
     int N;
 
-    N = sistema->tabela->qntdPontos;
+    N = 2*sistema->tabela->qntdPontos;
 
     for (int i = 0; i < N ; i++) {
 
@@ -57,6 +57,7 @@ void preencherEstrutura(struct sistemaLinear* sistema) {
         token = strtok(aux, " ");
         if (token != NULL) {
             valor = strtod(token, NULL);
+            printf("x%d: %2.2f\n", 2*i, valor);
             sistema->tabela->vetPontos[i] = calcularIntervalo(valor);
         }
 
@@ -64,6 +65,7 @@ void preencherEstrutura(struct sistemaLinear* sistema) {
         token = strtok(NULL, " ");
         if (token != NULL) {
             valor = strtod(token, NULL);
+            printf("x%d: %2.2f\n", 2*i+1, valor);
             sistema->tabela->vetPontos[i] = calcularIntervalo(valor);
         }
     }    
@@ -71,11 +73,11 @@ void preencherEstrutura(struct sistemaLinear* sistema) {
 
 void imprimir(struct sistemaLinear* sistema) {
 
-    printf("Grau: %d\n"< sistema->grauPolinomio);
-    printf("Quantidade de pontos: %d\n"< sistema->tabela->qntdPontos);
+    printf("Grau: %d\n", sistema->grauPolinomio);
+    printf("Quantidade de pontos: %d\n", sistema->tabela->qntdPontos);
 
     for (int i = 0; i < (sistema->tabela->qntdPontos) ; i++) {
-        printf("X%d: %2.2f [%2.2f|%2.2f]  Y%d: %2.2f [%2.2f|%2.2f]\n", i, sistema->tabela->vetPontos[2*i].num, sistema->tabela->vetPontos[2*i].anterior, sistema->tabela->vetPontos[2*i].posterior, i, sistema->tabela->vetPontos[2*i+1].num, sistema->tabela->vetPontos[2*i].anterior, sistema->tabela->vetPontos[2*i].posterior);
+        printf("X%d: %2.2f [%2.2f|%2.2f]  Y%d: %2.2f [%2.2f|%2.2f]\n", i, sistema->tabela->vetPontos[2*i].num, sistema->tabela->vetPontos[2*i].anterior, sistema->tabela->vetPontos[2*i].posterior, i, sistema->tabela->vetPontos[2*i+1].num, sistema->tabela->vetPontos[2*i+1].anterior, sistema->tabela->vetPontos[2*i+1].posterior);
     }
 }
 

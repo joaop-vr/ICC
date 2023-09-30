@@ -60,7 +60,7 @@ struct operandos calcularOperacao (struct operandos x, struct operandos y, char 
 
             resultado.num = x.num * y.num;    
 
-            float aux[4];                     
+            double aux[4];                     
 
             // Realizando multiplicações para o limite inferior
             fesetround(FE_DOWNWARD);
@@ -98,7 +98,7 @@ struct operandos calcularOperacao (struct operandos x, struct operandos y, char 
 
                 resultado.num = x.num * y.num;
 
-                float aux[4];
+                double aux[4];
 
                 // Realizando operações para o limite inferior
                 fesetround(FE_DOWNWARD);
@@ -125,9 +125,6 @@ struct operandos calcularOperacao (struct operandos x, struct operandos y, char 
         default:
             printf("Operador inválido.\n");
     }
-
-    // Imprime os resultados e precisões
-    imprimir(x, y, resultado, operador);
 
     return resultado;
 }
