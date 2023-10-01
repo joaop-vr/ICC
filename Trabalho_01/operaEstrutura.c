@@ -8,10 +8,9 @@
 #include "operaEstrutura.h"
 #include "calculoIntervalar.h"
 
-struct sistemaLinear* montarEstrutura() {
+struct ajustePol* montarEstrutura() {
 
-    struct sistemaLinear* sistema = malloc(sizeof(struct sistemaLinear));
-    sistema->tabela = malloc(sizeof(struct tabPontos));
+    struct ajustePol* sistema = malloc(sizeof(struct ajustePol));
     int grau, qntdPontos;
 
     // Lê o grau do polinomio
@@ -26,24 +25,27 @@ struct sistemaLinear* montarEstrutura() {
         exit(1);
     }
 
-    sistema->grauPolinomio = grau;
-    sistema->tabela->qntdPontos = qntdPontos;    
+    grau += 1;
+    sistema->grauPol = grau;
+    sistema->qntdPontos = qntdPontos;    
 
-    // Aloca o vetor que contém a tabela de pontos
-    sistema->tabela->vetPontos = alocarVetor(2*qntdPontos);
+    sistema->matriz = alocarMatriz(grau);
+    sistema->resultados = alocarVetor(grau);
+    sistema->coeficientes = alocarVetor(grau);
+    sistema->tabelaPontos = alocarVetor(2*qntdPontos);    
 
     preencherEstrutura(sistema);
 
     return sistema;
 }
 
-void preencherEstrutura(struct sistemaLinear* sistema) {
+void preencherEstrutura(struct ajustePol* sistema) {
 
     char aux[100], *token;
     double valor;
     int N;
 
-    N = 2*sistema->tabela->qntdPontos;
+    N = 2*sistema->qntdPontos;
 
     for (int i = 0; i < N ; i++) {
 
@@ -57,41 +59,26 @@ void preencherEstrutura(struct sistemaLinear* sistema) {
         token = strtok(aux, " ");
         if (token != NULL) {
             valor = strtod(token, NULL);
-            printf("x%d: %2.2f\n", 2*i, valor);
-            sistema->tabela->vetPontos[i] = calcularIntervalo(valor);
+            sistema->tabelaPontos[i] = calcularIntervalo(valor);
         }
 
         // Obtém a coordenada no eixo Y e calcula o intervalo
         token = strtok(NULL, " ");
         if (token != NULL) {
             valor = strtod(token, NULL);
-            printf("x%d: %2.2f\n", 2*i+1, valor);
-            sistema->tabela->vetPontos[i] = calcularIntervalo(valor);
+            sistema->tabelaPontos[i] = calcularIntervalo(valor);
         }
     }    
 }
 
-void imprimir(struct sistemaLinear* sistema) {
+void imprimir(struct ajustePol* sistema) {
 
-    printf("Grau: %d\n", sistema->grauPolinomio);
-    printf("Quantidade de pontos: %d\n", sistema->tabela->qntdPontos);
+    printf("Grau: %d\n", sistema->grauPol);
+    printf("Quantidade de pontos: %d\n", sistema->qntdPontos);
 
-    for (int i = 0; i < (sistema->tabela->qntdPontos) ; i++) {
-        printf("X%d: %2.2f [%2.2f|%2.2f]  Y%d: %2.2f [%2.2f|%2.2f]\n", i, sistema->tabela->vetPontos[2*i].num, sistema->tabela->vetPontos[2*i].anterior, sistema->tabela->vetPontos[2*i].posterior, i, sistema->tabela->vetPontos[2*i+1].num, sistema->tabela->vetPontos[2*i+1].anterior, sistema->tabela->vetPontos[2*i+1].posterior);
+    for (int i = 0; i < (sistema->qntdPontos) ; i++) {
+        printf("X%d: %2.2f [%2.2f|%2.2f]  Y%d: %2.2f [%2.2f|%2.2f]\n", i, sistema->tabelaPontos[2*i].num, sistema->tabelaPontos[2*i].anterior, sistema->tabelaPontos[2*i].posterior, i, sistema->tabelaPontos[2*i+1].num, sistema->tabelaPontos[2*i+1].anterior, sistema->tabelaPontos[2*i+1].posterior);
     }
-}
-
-struct operandos* alocarVetor(int N) {
-
-    // Alocação dinâmica da vetor
-    struct operandos *vet = (struct operandos *)malloc(N * sizeof(struct operandos));
-
-    if (!(vet)) {
-        fprintf(stderr, "Erro falha ao alocar vetor.\n");
-        exit(1);
-    }
-
-    return vet;
 }
 
 void destruirEstrutura(struct tabPontos* tabela) {

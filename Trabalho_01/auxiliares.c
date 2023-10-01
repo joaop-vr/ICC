@@ -1,4 +1,39 @@
+#include "estruturas.h"
 #include "auxiliares.h"
+
+struct operandos* alocarVetor(int N) {
+
+    // Alocação dinâmica da vetor
+    struct operandos *vet = (struct operandos *)malloc(N * sizeof(struct operandos));
+
+    if (!(vet)) {
+        fprintf(stderr, "Erro falha ao alocar vetor.\n");
+        exit(1);
+    }
+
+    return vet;
+}
+
+struct operandos** alocarMatriz(int N) {
+
+    // Alocação dinâmica da matriz
+    struct operandos** matriz = (struct operandos**)malloc(N * sizeof(struct operandos*));
+
+    if (!(matriz)) {
+        fprintf(stderr, "Erro falha ao alocar vetor.\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < N; i++) {
+        matriz[i] = (struct operandos*)malloc(N * sizeof(struct operandos));
+        if (!(matriz[i])) {
+            fprintf(stderr, "Erro falha ao alocar vetor.\n");
+            exit(1);
+        }
+    }
+
+    return matriz;
+}
 
 double max (double vet[4]) {
 

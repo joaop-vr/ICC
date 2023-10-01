@@ -3,13 +3,11 @@
 
 #include "estruturas.h"
 
-struct sistemaLinear* montarEstrutura();
+struct ajustePol* montarEstrutura();
 
-void preencherEstrutura(struct sistemaLinear* sistema);
+void preencherEstrutura(struct ajustePol* sistema);
 
-void imprimir(struct sistemaLinear* sistema);
-
-struct operandos* alocarVetor(int N);
+void imprimir(struct ajustePol* sistema);
 
 double timestamp();
 

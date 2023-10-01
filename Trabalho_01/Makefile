@@ -1,7 +1,7 @@
 LIKWID_HOME=/usr/local
 parametrosCompilacao = -lm -O3 -mavx -march=native #-I${LIKWID_HOME}/include -L${LIKWID_HOME}/lib -llikwid
 nomePrograma = ajustePol
-objs = main.o operaEstrutura.o calculoIntervalar.o auxiliares.o
+objs = main.o operaEstrutura.o calculoIntervalar.o auxiliares.o minimosQuadrados.o
 
 all: ajustePol
 
@@ -19,6 +19,9 @@ calculoIntervalar.o: calculoIntervalar.h calculoIntervalar.c
 
 auxiliares.o: auxiliares.h auxiliares.c
 	gcc -c auxiliares.c $(parametrosCompilacao)
+
+minimosQuadrados.o: minimosQuadrados.h minimosQuadrados.c
+	gcc -c minimosQuadrados.c $(parametrosCompilacao)
 
 clean:
 	-rm -f $(objs) *~

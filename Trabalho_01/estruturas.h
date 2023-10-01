@@ -60,17 +60,20 @@ struct tabPontos {
 
 
 /***************************
- * Stuct sistemaLinear <AINDA EM DESENVOLVIMENTO>
+ * Stuct ajustePol <AINDA EM DESENVOLVIMENTO>
  * 
 ****************************/
-struct sistemaLinear {
-    int grauPolinomio;
+struct ajustePol {
+    int grauPol;
+    int qntdPontos;
     /*double** matriz;        
     double* constantes;
     double* solucoes;
     double* residuos;*/
+    struct operandos** matriz;
+    struct operandos* resultados;
     struct operandos* coeficientes;
-    struct tabPontos* tabela;
+    struct operandos* tabelaPontos;
 };
 
 #endif

@@ -7,6 +7,7 @@
 #ifndef _CALCULOINTERVALAR_
 #define _CALCULOINTERVALAR_
 
+#include <stdlib.h>
 #include <float.h>
 #include <fenv.h>
 #include <math.h>
