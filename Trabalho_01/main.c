@@ -6,7 +6,6 @@
 
 #include "operaEstrutura.h"
 #include "calculoIntervalar.h"
-#include "minimosQuadrados.h"
 #include "estruturas.h"
 
 int main() {
