@@ -4,8 +4,9 @@
  * 
 ****************************/
 
-#include "operaEstrutura.h"
 #include "calculoIntervalar.h"
+#include "operaEstrutura.h"
+#include "minimosQuadrados.h"
 #include "estruturas.h"
 
 int main() {
