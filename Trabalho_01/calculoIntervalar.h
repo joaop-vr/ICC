@@ -18,5 +18,13 @@ struct operandos calcularIntervalo (double num);
 
 struct operandos calcularOperacao (struct operandos x, struct operandos y, int expoente, char operador);
 
+struct operandos calcularSoma(struct operandos x, struct operandos y);
 
+struct operandos calcularSubtracao(struct operandos x, struct operandos y);
+
+struct operandos calcularMulticacao(struct operandos x, struct operandos y);
+
+struct operandos calcularDivisao(struct operandos x, struct operandos y);
+
+struct operandos calcularExpo(struct operandos x, int expoente);
 #endif
