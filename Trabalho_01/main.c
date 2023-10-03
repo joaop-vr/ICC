@@ -12,7 +12,7 @@ int main() {
 
     struct ajustePol* sistema = montarEstrutura();
 
-    imprimir(sistema);
+    //imprimir(sistema);
 
     minimosQuadrados(sistema);
 

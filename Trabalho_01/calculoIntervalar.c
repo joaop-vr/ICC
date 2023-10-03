@@ -307,12 +307,7 @@ struct operandos calcularExpo(struct operandos x, int expoente) {
     b.f = x.posterior;
     double baseAnt, basePost;
 
-    if (fabs(x.num) < FLT_EPSILON) {
-        resultado.num = 0.0;
-        resultado.anterior = 0.0;
-        resultado.posterior = 0.0;
-    }
-    else if (expoente == 0) {   //  [1,1], se expoente = 0 
+    if (expoente == 0) {   //  [1,1], se expoente = 0 
         resultado.num = 1;
         resultado.anterior = 1;
         resultado.posterior = 1;

@@ -25,20 +25,30 @@ void minimosQuadrados(struct ajustePol* sistema) {
         for (int k = 0; k < sistema->qntdPontos; k++) {
             //sistema->resultados[i].num += pow(sistema->tabelaPontos[2*k].num, i)*sistema->tabelaPontos[2*k+1].num;
             aux1 = calcularExpo(sistema->tabelaPontos[2*k], i);
+            //printf("\naux1: %.4lf  [%.4lf | %.4lf]  <-  (%.4lf  [%.4lf | %.4lf])^%d\n", aux1.num, aux1.anterior, aux1.posterior, sistema->tabelaPontos[2*k].num, sistema->tabelaPontos[2*k].anterior, sistema->tabelaPontos[2*k].posterior, i);
+            
             aux2 = calcularMulticacao(aux1,sistema->tabelaPontos[2*k+1]);
+            //printf("aux2: %.4lf  [%.4lf | %.4lf]  <-  (%.4lf  [%.4lf | %.4lf]) * (%.4lf  [%.4lf | %.4lf])\n",
+            //aux2.num, aux2.anterior, aux2.posterior, aux1.num, aux1.anterior, aux1.posterior, sistema->tabelaPontos[2*k+1].num, sistema->tabelaPontos[2*k+1].anterior, sistema->tabelaPontos[2*k+1].posterior);
+            
+            //struct operandos versaoResultadoANterior = sistema->resultados[i];
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
+            //printf("sistema->resultados[i]  <-  (%.4lf  [%.4lf | %.4lf]) + (%.4lf  [%.4lf | %.4lf])\n",
+            //versaoResultadoANterior.num, versaoResultadoANterior.anterior, versaoResultadoANterior.posterior, aux2.num, aux2.anterior, aux2.posterior);
+            
+            //printf("Portanto: sistema->resultados[%d]  <-  (%.4lf  [%.4lf | %.4lf])\n", i, sistema->resultados[i].num, sistema->resultados[i].anterior, sistema->resultados[i].posterior);
         }
     }
 
-    for (int i = 0; i < sistema->grauPol; i++) {
+    /*for (int i = 0; i < sistema->grauPol; i++) {
         for (int j = 0; j < sistema->grauPol; j++) {
             printf("funcaoMQ matriz[%d][%d]: %.4lf  [%.4lf | %.4lf]\n", i, j, sistema->matriz[i][j].num, sistema->matriz[i][j].anterior, sistema->matriz[i][j].posterior);
         }
     }
     
-    for (int i = 0; i < sistema->qntdPontos; i++) {
+    for (int i = 0; i < sistema->grauPol; i++) {
         printf("resultados[%d]: %.4lf  [%.4lf | %.4lf]\n", i, sistema->resultados[i].num, sistema->resultados[i].anterior, sistema->resultados[i].posterior);
-    }
+    }*/
     gauss(sistema);
 }
 
@@ -48,8 +58,42 @@ void gauss(struct ajustePol* sistema) {
 
     for (int i = 0; i < sistema->grauPol; i++) {
         int pivo = encontraMax(sistema, i);
-        if (i != pivo)
+
+        printf("\n\n######## i = %d ########", i);
+        printf("\n\n######## pivo = %d ########\n", pivo);
+        /*for (int i = 0; i < sistema->grauPol; i++) {
+            for (int j = 0; j < sistema->grauPol; j++) {
+                printf("%10.4lf [%.4lf | %.4lf]\n", sistema->matriz[i][j].num, sistema->matriz[i][j].anterior, sistema->matriz[i][j].posterior);
+            }
+            printf(" %2.4lf [%.4lf | %.4lf]\n\n\n", sistema->resultados[i].num, sistema->resultados[i].anterior, sistema->resultados[i].posterior);
+        }*/
+        for (int i = 0; i < sistema->grauPol; i++) {
+            for (int j = 0; j < sistema->grauPol; j++) {
+                printf("%10.4lf  ", sistema->matriz[i][j].num);
+            }
+            printf(" %2.4lf\n", sistema->resultados[i].num);
+        }
+        printf("\n\n");
+
+        if (i != pivo) {
+            printf("VAI TROCAR A LINHAAAAAA\n");
             trocaLinha(sistema, i, pivo);
+        }
+
+        /*for (int i = 0; i < sistema->grauPol; i++) {
+            for (int j = 0; j < sistema->grauPol; j++) {
+                printf("%10.4lf [%.4lf | %.4lf]\n", sistema->matriz[i][j].num, sistema->matriz[i][j].anterior, sistema->matriz[i][j].posterior);
+            }
+            printf(" %2.4lf [%.4lf | %.4lf]\n\n\n", sistema->resultados[i].num, sistema->resultados[i].anterior, sistema->resultados[i].posterior);
+        }*/
+        for (int i = 0; i < sistema->grauPol; i++) {
+            for (int j = 0; j < sistema->grauPol; j++) {
+                printf("%10.4lf  ", sistema->matriz[i][j].num);
+            }
+            printf(" %2.4lf\n", sistema->resultados[i].num);
+        }
+        printf("\n\n");
+        printf("\n\n");
         
         for (int k = i+1; k < sistema->grauPol; k++) {
             //double m = sistema->matriz[k][i].num / sistema->matriz[i][i].num;
@@ -76,6 +120,15 @@ void gauss(struct ajustePol* sistema) {
     for (int i = 0; i < sistema->grauPol; i++) {
         printf("resultados[%d]: %.4lf  [%.4lf | %.4lf]\n", i, sistema->resultados[i].num, sistema->resultados[i].anterior, sistema->resultados[i].posterior);
     }
+
+    printf("\n\n");
+    for (int i = 0; i < sistema->grauPol; i++) {
+        for (int j = 0; j < sistema->grauPol; j++) {
+            printf("%10.4lf [%.4lf | %.4lf]\n", sistema->matriz[i][j].num, sistema->matriz[i][j].anterior, sistema->matriz[i][j].posterior);
+        }
+        printf(" %2.4lf [%.4lf | %.4lf]\n\n\n", sistema->resultados[i].num, sistema->resultados[i].anterior, sistema->resultados[i].posterior);
+    }
+    printf("\n\n");
     
     retroSubst(sistema);
 
@@ -87,10 +140,10 @@ void gauss(struct ajustePol* sistema) {
 }
 
 int encontraMax(struct ajustePol* sistema, int i) {
-    double maior = 0.0;
+    double maior = sistema->matriz[i][0].posterior;
     int indMaior = 0;
-    for (int j=0; j < sistema->grauPol; j++){
-        if (fabs(sistema->matriz[i][j].num) > maior){
+    for (int j=1; j < sistema->grauPol; j++){
+        if (fabs(sistema->matriz[i][j].posterior) > maior){
             maior = sistema->matriz[i][j].num;
             indMaior = j;
         }
