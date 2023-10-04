@@ -77,7 +77,7 @@ void imprimir(struct ajustePol* sistema) {
     printf("Quantidade de pontos: %d\n", sistema->qntdPontos);
 
     for (int i = 0; i < (sistema->qntdPontos) ; i++) {
-        printf("X%d: %2.2f [%2.2f|%2.2f]  Y%d: %2.2f [%2.2f|%2.2f]\n", i, sistema->tabelaPontos[2*i].num, sistema->tabelaPontos[2*i].anterior, sistema->tabelaPontos[2*i].posterior, i, sistema->tabelaPontos[2*i+1].num, sistema->tabelaPontos[2*i+1].anterior, sistema->tabelaPontos[2*i+1].posterior);
+        printf("X%d: %1.8e [%1.8e|%1.8e]  Y%d: %1.8e [%1.8e|%1.8e]\n", i, sistema->tabelaPontos[2*i].num, sistema->tabelaPontos[2*i].anterior, sistema->tabelaPontos[2*i].posterior, i, sistema->tabelaPontos[2*i+1].num, sistema->tabelaPontos[2*i+1].anterior, sistema->tabelaPontos[2*i+1].posterior);
     }
 }
 
