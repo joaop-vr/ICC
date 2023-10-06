@@ -24,7 +24,7 @@ minimosQuadrados.o: minimosQuadrados.h minimosQuadrados.c
 	gcc -c minimosQuadrados.c $(parametrosCompilacao)
 
 clean:
-	-rm -f $(objs) *~
+	-rm -f $(objs) *~ $(nomePrograma)
 
 purge: clean
 	-rm -f $(nomePrograma)

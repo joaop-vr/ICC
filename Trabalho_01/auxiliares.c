@@ -10,6 +10,7 @@
 #include <time.h>
 #include <likwid.h>
 
+// Aloca um vetor de structs operandos* de tamanho N e retorna um ponteiro para ele
 struct operandos* alocarVetor(int N) {
 
     // Alocação dinâmica da vetor
@@ -23,6 +24,7 @@ struct operandos* alocarVetor(int N) {
     return vet;
 }
 
+// Aloca uma matriz de structs operandos* de tamanho NxN e retorna um ponteiro para ela
 struct operandos** alocarMatriz(int N) {
 
     // Alocação dinâmica da matriz
@@ -44,6 +46,7 @@ struct operandos** alocarMatriz(int N) {
     return matriz;
 }
 
+// Retorna o maior elemento de vet[4]
 double max (double vet[4]) {
 
     double maior, dif;
@@ -63,6 +66,7 @@ double max (double vet[4]) {
     return maior;
 }
 
+// retorna o menor elemento de vet[4]
 double min (double vet[4]) {
 
     double menor, dif;
@@ -82,12 +86,14 @@ double min (double vet[4]) {
     return menor;
 }
 
+// Retorna um valor de tempo atual em milissegundos, usando o tempodo sistema operacional
 double timestamp(void){
     struct timespec tp;
     clock_gettime(CLOCK_MONOTONIC_RAW, &tp);
     return ((double)tp.tv_sec*1.0e3 + (double)tp.tv_nsec*1.0e-6);
 }
 
+// Calcula o resíduo de cada ponto e imprime o intervalo
 void calculaResiduos(struct ajustePol* sistema) {    
 
     struct operandos residuos[sistema->qntdPontos], FXi, Yi;

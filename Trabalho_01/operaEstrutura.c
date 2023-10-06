@@ -3,7 +3,6 @@
  * Aluno: Mateus Kater Pombeiro, GRR: 20190366
 ****************************/
 
-//#include "likwid.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,6 +12,7 @@
 #include "operaEstrutura.h"
 #include "calculoIntervalar.h"
 
+// Aloca os componentes de ajustepol e então chama a função preencherEstrutura()
 struct ajustePol* montarEstrutura() {
 
     struct ajustePol* sistema = malloc(sizeof(struct ajustePol));
@@ -44,6 +44,7 @@ struct ajustePol* montarEstrutura() {
     return sistema;
 }
 
+// Preenche a struct ajustePol com os pontos da tabela
 void preencherEstrutura(struct ajustePol* sistema) {
 
     char aux[100], *token;
@@ -76,6 +77,7 @@ void preencherEstrutura(struct ajustePol* sistema) {
     }    
 }
 
+// Imprime todos os metadados da struct ajustePol
 void imprimir(struct ajustePol* sistema) {
 
     printf("Grau: %d\n", sistema->grauPol);
@@ -86,6 +88,7 @@ void imprimir(struct ajustePol* sistema) {
     }
 }
 
+// Desaloca toda a struct ajustePol
 void destruirEstrutura(struct ajustePol* sistema) {
 
     for (int i = 0; i < sistema->grauPol; i++) {

@@ -8,10 +8,13 @@
 
 #include "estruturas.h"
 
+// Aloca os componentes de ajustepol e então chama a função preencherEstrutura()
 struct ajustePol* montarEstrutura();
 
+// Preenche a struct ajustePol com os pontos da tabela
 void preencherEstrutura(struct ajustePol* sistema);
 
+// Imprime todos os metadados da struct ajustePol
 void imprimir(struct ajustePol* sistema);
 
 // Libera toda a memória que foi alocada no decorrer do código 

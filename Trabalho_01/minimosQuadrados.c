@@ -7,6 +7,7 @@
 #include "calculoIntervalar.h"
 #include "minimosQuadrados.h"
 
+// Aplica o método dos mínimos quadrados e posteriormente chama a função "gauss()"
 struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
 
     struct operandos aux1, aux2, aux3;
@@ -23,7 +24,6 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
                 aux2 = calcularExpo(sistema->tabelaPontos[2*k], j);
                 aux3 = calcularMulticacao(aux1,aux2);
                 sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
-                //sistema->matriz[i][j] = calcularIntervalo(sistema->matriz[i][j].num);
             }
         }
 
@@ -34,7 +34,6 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
             aux1 = calcularExpo(sistema->tabelaPontos[2*k], i);
             aux2 = calcularMulticacao(aux1,sistema->tabelaPontos[2*k+1]);
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
-            //sistema->resultados[i] = calcularIntervalo(sistema->resultados[i].num);
        }
     }
 
@@ -42,6 +41,7 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
     return sistema;
 }
 
+// Aplica o método de eliminação de gauss com pivoteamento parcial
 void gauss(struct ajustePol* sistema) {
 
     struct operandos aux;
@@ -66,14 +66,12 @@ void gauss(struct ajustePol* sistema) {
             for (int j = i+1; j < sistema->grauPol; j++) {
                 aux = calcularMulticacao(sistema->matriz[i][j], m);
                 sistema->matriz[k][j] = calcularSubtracao(sistema->matriz[k][j], aux);
-                //sistema->matriz[k][j] = calcularIntervalo(sistema->matriz[k][j].num);
             }
 
             // Aplica as operações aritméticas sobre os resultados de cada linha da matriz, 
             // ou seja, sobre os valores de B do sistema linear AX=B
             aux = calcularMulticacao(sistema->resultados[i], m);
             sistema->resultados[k] = calcularSubtracao(sistema->resultados[k], aux);
-            //sistema->resultados[k] = calcularIntervalo(sistema->resultados[k].num);
         }
     }
     
@@ -82,6 +80,8 @@ void gauss(struct ajustePol* sistema) {
     
 }
 
+// Varre a matriz da struct ajustePol e retorna o indice do maior double
+// presente na linha "i" da matriz
 int encontraMax(struct ajustePol* sistema, int i) {
 
     double maior = sistema->matriz[i][0].posterior;
@@ -98,6 +98,7 @@ int encontraMax(struct ajustePol* sistema, int i) {
     return indMaior;
 }
 
+// Efetua a troca entre as linhas "i" e "iPivo" da matriz da struct ajustePol
 void trocaLinha (struct ajustePol* sistema, int i, int iPivo) {
 
     struct operandos aux;
@@ -115,6 +116,7 @@ void trocaLinha (struct ajustePol* sistema, int i, int iPivo) {
     sistema->resultados[iPivo] = aux;
 }
 
+// Aplica a técnica de retro substituição
 void retroSubst(struct ajustePol* sistema) {
 
     struct operandos aux;
@@ -127,14 +129,13 @@ void retroSubst(struct ajustePol* sistema) {
         for (int j = (i+1); j < sistema->grauPol; j++) {
             aux = calcularMulticacao(sistema->matriz[i][j], sistema->coeficientes[j]);
             sistema->coeficientes[i] = calcularSubtracao(sistema->coeficientes[i], aux);
-            //sistema->coeficientes[i] = calcularIntervalo(sistema->coeficientes[i].num);
         }
 
         sistema->coeficientes[i] = calcularDivisao(sistema->coeficientes[i], sistema->matriz[i][i]);
-        //sistema->coeficientes[i] = calcularIntervalo(sistema->coeficientes[i].num);
     }
 }
 
+// Recebe uma struct operandos X0 e retorna f(X0)
 struct operandos polinomio(struct ajustePol* sistema, struct operandos x0) {
 
     struct operandos aux1, aux2, resultado;
@@ -142,8 +143,8 @@ struct operandos polinomio(struct ajustePol* sistema, struct operandos x0) {
     resultado.anterior = 0.0;
     resultado.posterior = 0.0;
 
-    // Percorre o vetor dos coeficientes aplicando exponenciação no 
-    // valor X0 da entrada e então multiplica pelo coeficiente correspondente
+    // Percorre o vetor dos coeficientes aplicando exponenciação no parâmetro
+    // para então multiplicar pelo coeficiente correspondente
     for (int i = 0; i < sistema->grauPol; i++) {
         aux1 = calcularExpo(x0, i);
         aux2 = calcularMulticacao(sistema->coeficientes[i], aux1);

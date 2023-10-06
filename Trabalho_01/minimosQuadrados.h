@@ -6,7 +6,7 @@
 #ifndef _MINIMOSQUADRADOS_
 #define _MINIMOSQUADRADOS_
 
-// Aplica o método dos mínimos quadrados e posteriormente chama a função "gauss()"
+// Aplica o método dos mínimos quadrados e retorna a struct ajustePol modificada"
 struct ajustePol* minimosQuadrados(struct ajustePol* sistema);
 
 // Aplica o método de eliminação de gauss com pivoteamento parcial na matriz da struct ajustePol
@@ -22,7 +22,7 @@ void trocaLinha (struct ajustePol* sistema, int i, int iPivo);
 // Aplica a técnica de retro substituição na matriz da struct ajustePol
 void retroSubst(struct ajustePol* sistema);
 
-// Recebe uma struct operandos X0 e retorna 
+// Recebe uma struct operandos X0 e retorna f(X0)
 struct operandos polinomio(struct ajustePol* sistema, struct operandos x0);
 
 #endif
