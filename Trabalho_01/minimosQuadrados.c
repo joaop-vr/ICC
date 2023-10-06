@@ -1,3 +1,8 @@
+/***************************
+ * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
+ * Aluno: Mateus Kater Pombeiro, GRR: 20190366
+****************************/
+
 #include "estruturas.h"
 #include "calculoIntervalar.h"
 #include "minimosQuadrados.h"

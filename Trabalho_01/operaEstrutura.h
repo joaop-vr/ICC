@@ -1,3 +1,8 @@
+/***************************
+ * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
+ * Aluno: Mateus Kater Pombeiro, GRR: 20190366
+****************************/
+
 #ifndef OPERAESTRUTURA_H_
 #define OPERAESTRUTURA_H_
 
