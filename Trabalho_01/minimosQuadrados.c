@@ -6,17 +6,16 @@
 #include "estruturas.h"
 #include "calculoIntervalar.h"
 #include "minimosQuadrados.h"
-
-/***************************
- * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
- * Aluno: Mateus Kater Pombeiro, GRR: 20190366
-****************************/
+#include "auxiliares.h"
 
 void minimosQuadrados(struct ajustePol* sistema) {
 
     struct operandos aux1, aux2, aux3;
+    double start,end;
 
     for (int i = 0; i < sistema->grauPol; i++) {
+
+        start = timestamp();
 
         // Aplica as operações aritméticas sobre os valores da matriz de coeficientes do sistema linear,
         // ou seja, sobre os valores de A do sistema linear AX=B
@@ -42,6 +41,9 @@ void minimosQuadrados(struct ajustePol* sistema) {
        }
     }
 
+    end = timestamp();
+    printf("%lf\n", end-start); // Tempo para calcular geração dos coeficientes e termos independentes do sistema linear 
+
     // Aplica a eliminação de gauss no sistema linear montado acima 
     gauss(sistema);
 }
@@ -49,6 +51,9 @@ void minimosQuadrados(struct ajustePol* sistema) {
 void gauss(struct ajustePol* sistema) {
 
     struct operandos aux;
+    double start, end;
+
+    start = timestamp();
 
     for (int i = 0; i < sistema->grauPol; i++) {
 
@@ -79,6 +84,9 @@ void gauss(struct ajustePol* sistema) {
             sistema->resultados[k] = calcularIntervalo(sistema->resultados[k].num);
         }
     }
+    
+    end = timestamp();
+    printf("%lf\n", end-start); // Tempo gasto na solução do sistema linear
     
     // Aplica a retro substituição no sistema linear triangularizado
     retroSubst(sistema);

@@ -13,11 +13,6 @@
 #include "operaEstrutura.h"
 #include "calculoIntervalar.h"
 
-/***************************
- * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
- * Aluno: Mateus Kater Pombeiro, GRR: 20190366
-****************************/
-
 struct ajustePol* montarEstrutura() {
 
     struct ajustePol* sistema = malloc(sizeof(struct ajustePol));

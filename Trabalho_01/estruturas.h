@@ -9,11 +9,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-/***************************
- * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
- * Aluno: Mateus Kater Pombeiro, GRR: 20190366
-****************************/
-
 typedef union
 {
     int32_t i;

@@ -1,12 +1,13 @@
-#include "estruturas.h"
-#include "auxiliares.h"
-#include "calculoIntervalar.h"
-#include "minimosQuadrados.h"
-
 /***************************
  * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
  * Aluno: Mateus Kater Pombeiro, GRR: 20190366
 ****************************/
+
+#include "estruturas.h"
+#include "auxiliares.h"
+#include "calculoIntervalar.h"
+#include "minimosQuadrados.h"
+#include <likwid.h>
 
 struct operandos* alocarVetor(int N) {
 
@@ -80,7 +81,11 @@ double min (double vet[4]) {
     return menor;
 }
 
-double timestamp();
+double timestamp(void){
+    struct timespec tp;
+    clock_gettime(CLOCK_MONOTONIC_RAW, &tp);
+    return ((double)tp.tv_sec*1.0e3 + (double)tp.tv_nsec*1.0e-6);
+}
 
 void calculaResiduos(struct ajustePol* sistema) {    
 

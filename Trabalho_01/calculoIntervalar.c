@@ -1,9 +1,9 @@
-#include "calculoIntervalar.h"
-
 /***************************
  * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
  * Aluno: Mateus Kater Pombeiro, GRR: 20190366
 ****************************/
+
+#include "calculoIntervalar.h"
 
 struct operandos calcularIntervalo (double num) {
 

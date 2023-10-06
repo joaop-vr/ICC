@@ -10,9 +10,12 @@
 
 int main() {
 
+    LIKWID_MARKER_INIT;
+
     // Aloca as estruturas de dados necessárias e guarda a tabela de pontos
     struct ajustePol* sistema = montarEstrutura();
 
+    LIKWID_MARKER_START("main");
     // Aplica o método dos mínimos quadrados para ajuste de curva
     minimosQuadrados(sistema);
 
@@ -24,6 +27,9 @@ int main() {
     // Calcula e imprime os resíduos
     calculaResiduos(sistema);
 
+    LIKWID_MARKER_STOP("main");
+    
+    LIKWID_MARKER_CLOSE;
     
     // Áreea de testes
     struct operandos x_teste = calcularIntervalo(2000);

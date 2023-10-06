@@ -13,11 +13,6 @@
 #include "estruturas.h"
 #include "auxiliares.h"
 
-/***************************
- * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
- * Aluno: Mateus Kater Pombeiro, GRR: 20190366
-****************************/
-
 // Parâmetros: número float
 // Retorno: struct operandos com o intervalo que compreende o número fornecido
 struct operandos calcularIntervalo (double num);
