@@ -1,14 +1,13 @@
-/***************************
- * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
- * Aluno:  , GRR:
- * 
-****************************/
-
 #ifndef ESTRUTURAS_H
 #define ESTRUTURAS_H
 
 #include <stdio.h>
 #include <stdint.h>
+
+/***************************
+ * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
+ * Aluno: Mateus Kater Pombeiro, GRR: 20190366
+****************************/
 
 typedef union
 {
@@ -39,7 +38,21 @@ struct operandos {
 };
 
 /***************************
- * Stuct ajustePol <AINDA EM DESENVOLVIMENTO>
+ * Stuct ajustePol corresponde a estrutura de dados que engloba todos os vetores e matrizes que utilizamos 
+ * para a implementação do método dos Mínimos Quadrados
+ * 
+ * grauPol = grau do polinômio
+ * qntdPontos = número de pontos da tabela
+ * matriz = matriz com os coerficientes do sistema linear
+ * coeficientes = vetor com os coeficientes do polinômio
+ * tabelaPontpos = vetor com os valores de X e Y passados pelo usuário
+ * 
+ * Obs.: O componente "vetPontos" está organizado de forma que:
+ * X0 e Y0 estão nos indices 0 e 1 do vetor
+ * X1 e Y1 estão nos indices 2 e 3 do vetor
+ * X2 e Y2 estão nos indices 4 e 5 do vetor
+ * (...)
+ * Xi e Yi estão nos indices 2*i e 2*i+1
  * 
 ****************************/
 struct ajustePol {

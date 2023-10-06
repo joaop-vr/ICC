@@ -8,6 +8,11 @@
 #include "operaEstrutura.h"
 #include "calculoIntervalar.h"
 
+/***************************
+ * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
+ * Aluno: Mateus Kater Pombeiro, GRR: 20190366
+****************************/
+
 struct ajustePol* montarEstrutura() {
 
     struct ajustePol* sistema = malloc(sizeof(struct ajustePol));
@@ -25,7 +30,7 @@ struct ajustePol* montarEstrutura() {
         exit(1);
     }
 
-    grau += 1;
+    grau += 1; // pois o primeiro índice do vetor é o 0
     sistema->grauPol = grau;
     sistema->qntdPontos = qntdPontos;    
 
@@ -81,8 +86,13 @@ void imprimir(struct ajustePol* sistema) {
     }
 }
 
-/*void destruirEstrutura(struct tabPontos* tabela) {
+void destruirEstrutura(struct ajustePol* sistema) {
 
-    free(tabela->vetPontos);
-    free(tabela);
-}*/
+    for (int i = 0; i < sistema->grauPol; i++) {
+        free(sistema->matriz[i]);
+    }
+    free(sistema->matriz);
+    free(sistema->resultados);
+    free(sistema->coeficientes);
+    free(sistema->tabelaPontos);
+}

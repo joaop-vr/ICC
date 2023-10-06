@@ -1,10 +1,9 @@
+#include "calculoIntervalar.h"
+
 /***************************
  * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
- * Aluno:  , GRR:
- * 
+ * Aluno: Mateus Kater Pombeiro, GRR: 20190366
 ****************************/
-
-#include "calculoIntervalar.h"
 
 struct operandos calcularIntervalo (double num) {
 
@@ -50,10 +49,6 @@ struct operandos calcularSubtracao(struct operandos x, struct operandos y) {
 
     fesetround(FE_UPWARD);
     resultado.posterior = x.posterior - y.anterior;
-
-
-    /*printf("%1.8e  [%1.8e | %1.8e]  =  %1.8e  [%1.8e | %1.8e]  -  %1.8e [%1.8e | %1.8e]\n", resultado.num, resultado.anterior, resultado.posterior, x.num, x.anterior, x.posterior, 
-    y.num, y.anterior, y.posterior);*/
 
     return resultado;
 }
@@ -179,6 +174,7 @@ struct operandos calcularExpo(struct operandos x, int expoente) {
         fesetround(FE_UPWARD);
         bExp = (double) pow(x.posterior, expoente);
 
+        // max recebe o maior valor, entre a^expoente e b^expoente
         max = ((aExp - bExp) >= FLT_EPSILON) ? aExp : bExp;
 
         resultado.num = (double) pow(x.num, expoente);

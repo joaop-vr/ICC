@@ -3,6 +3,11 @@
 #include "calculoIntervalar.h"
 #include "minimosQuadrados.h"
 
+/***************************
+ * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
+ * Aluno: Mateus Kater Pombeiro, GRR: 20190366
+****************************/
+
 struct operandos* alocarVetor(int N) {
 
     // Alocação dinâmica da vetor
@@ -41,7 +46,7 @@ double max (double vet[4]) {
 
     double maior, dif;
 
-    // Inicializa 'maior' com o valor absoluto do primeiro elemento
+    // Inicializa 'maior' com o valor do primeiro elemento
     maior = vet[0]; 
     for (int i = 1; i < 4; i++) {
         dif = fabs(vet[i] - maior);
@@ -60,7 +65,7 @@ double min (double vet[4]) {
 
     double menor, dif;
 
-    // Inicializa 'menor' com o valor absoluto do primeiro elemento
+    // Inicializa 'menor' com o valor do primeiro elemento
     menor = vet[0]; 
     for (int i = 1; i < 4; i++) {
         dif = fabs(vet[i] - menor);
@@ -75,21 +80,19 @@ double min (double vet[4]) {
     return menor;
 }
 
-void calculaResiduos(struct ajustePol* sistema) {
+double timestamp();
 
-    printf("\nteste\n");
-    
+void calculaResiduos(struct ajustePol* sistema) {    
 
     struct operandos residuos[sistema->qntdPontos], FXi, Yi;
 
+    // Percorre pela tabela de pontos calculando o resíduo de cada f(Xi)
     for (int i = 0; i < sistema->qntdPontos; i++) {
         Yi = sistema->tabelaPontos[2*i+1];
         FXi = polinomio(sistema, sistema->tabelaPontos[2*i]);
         residuos[i] = calcularSubtracao(Yi, FXi);
 
-        //printf("x%d: %1.8e  y%d: %1.8e\n", i, sistema->tabelaPontos[2*i].num, i, sistema->tabelaPontos[2*i+1].num);
-        //printf("FX%d: %1.8e  Y%d: %1.8e\n\n", i, FXi.num, i, Yi.num);
-        printf("%.4lf  [%.4lf | %.4lf]\n", residuos[i].num, residuos[i].anterior, residuos[i].posterior);
+        printf("[%.4lf | %.4lf]  ", residuos[i].anterior, residuos[i].posterior);
     }
 
 }
