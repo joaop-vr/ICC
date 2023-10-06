@@ -115,9 +115,33 @@ void retroSubst(struct ajustePol* sistema) {
     }
 }
 
-double polinomio(struct ajustePol* sistema, double x0) {
-    double resultado = 0.0;
-    for (int i = 0; i < sistema->grauPol; i++)
-        resultado += sistema->coeficientes[i].num*pow(x0, i);
+struct operandos polinomio(struct ajustePol* sistema, struct operandos x0) {
+
+    struct operandos aux1, aux2, resultado;
+    resultado.num = 0.0;
+    resultado.anterior = 0.0;
+    resultado.posterior = 0.0;
+
+    for (int i = 0; i < sistema->grauPol; i++) {
+        
+        /*printf("\n\n### i=%d ###\n", i);
+        printf("aux1 <- x0 ^ %d\n", i);
+        printf("aux1 <- %1.8e  [%1.8e | %1.8e] ^ %d\n", x0.num, x0.anterior, x0.posterior, i);
+        */
+        aux1 = calcularExpo(x0, i);
+
+        /*printf("aux2 <- sistema->coeficientes[%d] * aux1\n", i);
+        printf("aux2 <- %1.8e  [%1.8e | %1.8e] * %1.8e  [%1.8e | %1.8e]\n", i, sistema->coeficientes[i].num, sistema->coeficientes[i].anterior, sistema->coeficientes[i].posterior,
+        aux1.num, aux1.anterior, aux1.posterior);
+        */
+        aux2 = calcularMulticacao(sistema->coeficientes[i], aux1);
+
+        /*printf("resultado <- resultado + aux2\n");
+        printf("resultado <- %1.8e  [%1.8e | %1.8e] + %1.8e  [%1.8e | %1.8e]\n", i, resultado.num, resultado.anterior, resultado.posterior,
+        aux2.num, aux2.anterior, aux2.posterior);
+        */
+        resultado = calcularSoma(resultado, aux2);
+    }
+        //resultado += sistema->coeficientes[i].num*pow(x0, i);
     return resultado;
 }

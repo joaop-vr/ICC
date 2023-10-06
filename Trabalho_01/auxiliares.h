@@ -18,4 +18,5 @@ double max (double vet[4]);
 // Retorno: menor número do vetor (double)
 double min (double vet[4]);
 
+void calculaResiduos(struct ajustePol* sistema);
 #endif

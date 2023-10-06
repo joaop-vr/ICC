@@ -1,5 +1,7 @@
 #include "estruturas.h"
 #include "auxiliares.h"
+#include "calculoIntervalar.h"
+#include "minimosQuadrados.h"
 
 struct operandos* alocarVetor(int N) {
 
@@ -71,4 +73,23 @@ double min (double vet[4]) {
     }
 
     return menor;
+}
+
+void calculaResiduos(struct ajustePol* sistema) {
+
+    printf("\nteste\n");
+    
+
+    struct operandos residuos[sistema->qntdPontos], FXi, Yi;
+
+    for (int i = 0; i < sistema->qntdPontos; i++) {
+        Yi = sistema->tabelaPontos[2*i+1];
+        FXi = polinomio(sistema, sistema->tabelaPontos[2*i]);
+        residuos[i] = calcularSubtracao(Yi, FXi);
+
+        //printf("x%d: %1.8e  y%d: %1.8e\n", i, sistema->tabelaPontos[2*i].num, i, sistema->tabelaPontos[2*i+1].num);
+        //printf("FX%d: %1.8e  Y%d: %1.8e\n\n", i, FXi.num, i, Yi.num);
+        printf("%.4lf  [%.4lf | %.4lf]\n", residuos[i].num, residuos[i].anterior, residuos[i].posterior);
+    }
+
 }

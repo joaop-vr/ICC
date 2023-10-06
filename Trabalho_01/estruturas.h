@@ -38,27 +38,6 @@ struct operandos {
     double posterior;
 };
 
-
-/***************************
- * Struct tabPontos corresponde á tabela de pontos com a qual trabalharemos
- * 
- * qntdPontos = quantidade de pontos da tabela
- * vetPontos = vetor com os pontos
- * 
- * O componente "struct operandos* vetPontos" está organizado de forma que:
- * X0 e Y0 estão nos indices 0 e 1 do vetor
- * X1 e Y1 estão nos indices 2 e 3 do vetor
- * X2 e Y2 estão nos indices 4 e 5 do vetor
- * (...)
- * Xi e Yi estão nos indices 2*i e 2*i+1
- * 
-****************************/
-struct tabPontos {
-    int qntdPontos;
-    struct operandos* vetPontos;
-};
-
-
 /***************************
  * Stuct ajustePol <AINDA EM DESENVOLVIMENTO>
  * 
@@ -66,10 +45,6 @@ struct tabPontos {
 struct ajustePol {
     int grauPol;
     int qntdPontos;
-    /*double** matriz;        
-    double* constantes;
-    double* solucoes;
-    double* residuos;*/
     struct operandos** matriz;
     struct operandos* resultados;
     struct operandos* coeficientes;

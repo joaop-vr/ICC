@@ -81,8 +81,8 @@ void imprimir(struct ajustePol* sistema) {
     }
 }
 
-void destruirEstrutura(struct tabPontos* tabela) {
+/*void destruirEstrutura(struct tabPontos* tabela) {
 
     free(tabela->vetPontos);
     free(tabela);
-}
+}*/

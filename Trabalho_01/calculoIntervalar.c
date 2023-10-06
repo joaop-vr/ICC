@@ -51,6 +51,10 @@ struct operandos calcularSubtracao(struct operandos x, struct operandos y) {
     fesetround(FE_UPWARD);
     resultado.posterior = x.posterior - y.anterior;
 
+
+    /*printf("%1.8e  [%1.8e | %1.8e]  =  %1.8e  [%1.8e | %1.8e]  -  %1.8e [%1.8e | %1.8e]\n", resultado.num, resultado.anterior, resultado.posterior, x.num, x.anterior, x.posterior, 
+    y.num, y.anterior, y.posterior);*/
+
     return resultado;
 }
 

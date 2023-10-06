@@ -11,5 +11,5 @@ void trocaLinha (struct ajustePol* sistema, int i, int iPivo);
 
 void retroSubst(struct ajustePol* sistema);
 
-double polinomio(struct ajustePol* sistema, double x0);
+struct operandos polinomio(struct ajustePol* sistema, struct operandos x0);
 #endif
