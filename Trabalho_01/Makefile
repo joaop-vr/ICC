@@ -1,5 +1,5 @@
 LIKWID_HOME=/home/soft/likwid
-parametrosCompilacao = -lm -O3 -mavx -march=native -I ${LIKWID_HOME}/include -L ${LIKWID_HOME}/lib -DLIKWID_PERFMON -llikwid
+parametrosCompilacao = -lm -O3 -mavx -march=native -I ${LIKWID_HOME}/include -L ${LIKWID_HOME}/lib -llikwid
 nomePrograma = ajustePol
 objs = main.o operaEstrutura.o calculoIntervalar.o auxiliares.o minimosQuadrados.o
 

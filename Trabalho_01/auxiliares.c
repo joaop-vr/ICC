@@ -7,6 +7,7 @@
 #include "auxiliares.h"
 #include "calculoIntervalar.h"
 #include "minimosQuadrados.h"
+#include <time.h>
 #include <likwid.h>
 
 struct operandos* alocarVetor(int N) {

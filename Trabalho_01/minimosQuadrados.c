@@ -87,7 +87,7 @@ void gauss(struct ajustePol* sistema) {
     
     end = timestamp();
     printf("%lf\n", end-start); // Tempo gasto na solução do sistema linear
-    
+
     // Aplica a retro substituição no sistema linear triangularizado
     retroSubst(sistema);
     

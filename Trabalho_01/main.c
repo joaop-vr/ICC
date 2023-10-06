@@ -2,6 +2,8 @@
 #include "operaEstrutura.h"
 #include "minimosQuadrados.h"
 #include "estruturas.h"
+#include <likwid.h>
+
 
 /***************************
  * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
@@ -28,7 +30,7 @@ int main() {
     calculaResiduos(sistema);
 
     LIKWID_MARKER_STOP("main");
-    
+
     LIKWID_MARKER_CLOSE;
     
     // Áreea de testes

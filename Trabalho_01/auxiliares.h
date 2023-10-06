@@ -25,4 +25,6 @@ double min (double vet[4]);
 // Calcula e imprime o resíduo da cada valor de X gerado pelo polinômio encontrado
 void calculaResiduos(struct ajustePol* sistema);
 
+double timestamp(void);
+
 #endif
