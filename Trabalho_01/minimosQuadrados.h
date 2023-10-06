@@ -6,13 +6,8 @@
 #ifndef _MINIMOSQUADRADOS_
 #define _MINIMOSQUADRADOS_
 
-/***************************
- * Aluno: Joao Pedro Vicente Ramalho, GRR: 20224169
- * Aluno: Mateus Kater Pombeiro, GRR: 20190366
-****************************/
-
 // Aplica o método dos mínimos quadrados e posteriormente chama a função "gauss()"
-void minimosQuadrados(struct ajustePol* sistema);
+struct ajustePol* minimosQuadrados(struct ajustePol* sistema);
 
 // Aplica o método de eliminação de gauss com pivoteamento parcial na matriz da struct ajustePol
 void gauss(struct ajustePol* sistema);

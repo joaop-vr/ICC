@@ -6,16 +6,13 @@
 #include "estruturas.h"
 #include "calculoIntervalar.h"
 #include "minimosQuadrados.h"
-#include "auxiliares.h"
 
-void minimosQuadrados(struct ajustePol* sistema) {
+struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
 
     struct operandos aux1, aux2, aux3;
     double start,end;
 
     for (int i = 0; i < sistema->grauPol; i++) {
-
-        start = timestamp();
 
         // Aplica as operações aritméticas sobre os valores da matriz de coeficientes do sistema linear,
         // ou seja, sobre os valores de A do sistema linear AX=B
@@ -26,7 +23,7 @@ void minimosQuadrados(struct ajustePol* sistema) {
                 aux2 = calcularExpo(sistema->tabelaPontos[2*k], j);
                 aux3 = calcularMulticacao(aux1,aux2);
                 sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
-                sistema->matriz[i][j] = calcularIntervalo(sistema->matriz[i][j].num);
+                //sistema->matriz[i][j] = calcularIntervalo(sistema->matriz[i][j].num);
             }
         }
 
@@ -37,23 +34,18 @@ void minimosQuadrados(struct ajustePol* sistema) {
             aux1 = calcularExpo(sistema->tabelaPontos[2*k], i);
             aux2 = calcularMulticacao(aux1,sistema->tabelaPontos[2*k+1]);
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
-            sistema->resultados[i] = calcularIntervalo(sistema->resultados[i].num);
+            //sistema->resultados[i] = calcularIntervalo(sistema->resultados[i].num);
        }
     }
 
-    end = timestamp();
-    printf("%lf\n", end-start); // Tempo para calcular geração dos coeficientes e termos independentes do sistema linear 
-
     // Aplica a eliminação de gauss no sistema linear montado acima 
-    gauss(sistema);
+    return sistema;
 }
 
 void gauss(struct ajustePol* sistema) {
 
     struct operandos aux;
     double start, end;
-
-    start = timestamp();
 
     for (int i = 0; i < sistema->grauPol; i++) {
 
@@ -74,20 +66,17 @@ void gauss(struct ajustePol* sistema) {
             for (int j = i+1; j < sistema->grauPol; j++) {
                 aux = calcularMulticacao(sistema->matriz[i][j], m);
                 sistema->matriz[k][j] = calcularSubtracao(sistema->matriz[k][j], aux);
-                sistema->matriz[k][j] = calcularIntervalo(sistema->matriz[k][j].num);
+                //sistema->matriz[k][j] = calcularIntervalo(sistema->matriz[k][j].num);
             }
 
             // Aplica as operações aritméticas sobre os resultados de cada linha da matriz, 
             // ou seja, sobre os valores de B do sistema linear AX=B
             aux = calcularMulticacao(sistema->resultados[i], m);
             sistema->resultados[k] = calcularSubtracao(sistema->resultados[k], aux);
-            sistema->resultados[k] = calcularIntervalo(sistema->resultados[k].num);
+            //sistema->resultados[k] = calcularIntervalo(sistema->resultados[k].num);
         }
     }
     
-    end = timestamp();
-    printf("%lf\n", end-start); // Tempo gasto na solução do sistema linear
-
     // Aplica a retro substituição no sistema linear triangularizado
     retroSubst(sistema);
     
@@ -138,11 +127,11 @@ void retroSubst(struct ajustePol* sistema) {
         for (int j = (i+1); j < sistema->grauPol; j++) {
             aux = calcularMulticacao(sistema->matriz[i][j], sistema->coeficientes[j]);
             sistema->coeficientes[i] = calcularSubtracao(sistema->coeficientes[i], aux);
-            sistema->coeficientes[i] = calcularIntervalo(sistema->coeficientes[i].num);
+            //sistema->coeficientes[i] = calcularIntervalo(sistema->coeficientes[i].num);
         }
 
         sistema->coeficientes[i] = calcularDivisao(sistema->coeficientes[i], sistema->matriz[i][i]);
-        sistema->coeficientes[i] = calcularIntervalo(sistema->coeficientes[i].num);
+        //sistema->coeficientes[i] = calcularIntervalo(sistema->coeficientes[i].num);
     }
 }
 

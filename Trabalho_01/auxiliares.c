@@ -98,7 +98,8 @@ void calculaResiduos(struct ajustePol* sistema) {
         FXi = polinomio(sistema, sistema->tabelaPontos[2*i]);
         residuos[i] = calcularSubtracao(Yi, FXi);
 
-        printf("[%.4lf | %.4lf]  ", residuos[i].anterior, residuos[i].posterior);
+        printf("[%1.8e,%1.8e]  ", residuos[i].anterior, residuos[i].posterior);
     }
+    printf("\n");
 
 }
