@@ -75,4 +75,4 @@ Compartimentado em 5 bibliotecas (estruturas.h, operaEstrutura.h, minimosQuadrad
 
 ## Limitações
 
-Durante os testes não foram detectadas limitações do programa. Tais testes estão presentes na pasta "testes".
+Durante os testes não foram detectadas limitações do programa. Tais testes conrespondem ao arquivo teste.in disponibilizado pelo professor.
