@@ -57,8 +57,8 @@ double max (double vet[4]) {
         dif = fabs(vet[i] - maior);
 
         // Verificando se o valor do vetor é o maior
-        // levando em consideração a margem de erro (FLT_EPSILON)
-        if ((vet[i] > maior) && (dif > FLT_EPSILON)) {
+        // levando em consideração a margem de erro (DBL_EPSILON)
+        if ((vet[i] > maior) && (dif > DBL_EPSILON)) {
             maior = vet[i];
         }
     }
@@ -77,8 +77,8 @@ double min (double vet[4]) {
         dif = fabs(vet[i] - menor);
 
         // Verificando se o valor do vetor é o menor
-        // levando em consideração a margem de erro (FLT_EPSILON)
-        if ((vet[i] < menor) && (dif > FLT_EPSILON)) {
+        // levando em consideração a margem de erro (DBL_EPSILON)
+        if ((vet[i] < menor) && (dif > DBL_EPSILON)) {
             menor = vet[i];
         }
     }
@@ -86,7 +86,7 @@ double min (double vet[4]) {
     return menor;
 }
 
-// Retorna um valor de tempo atual em milissegundos, usando o tempodo sistema operacional
+// Retorna um valor de tempo atual em milissegundos, usando o tempo do sistema operacional
 double timestamp(void){
     struct timespec tp;
     clock_gettime(CLOCK_MONOTONIC_RAW, &tp);

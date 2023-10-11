@@ -17,18 +17,20 @@ int main() {
     // Aloca as estruturas de dados necessárias e guarda a tabela de pontos
     struct ajustePol* sistema = montarEstrutura();
     double start, end, tsolSL, tgeraSL;
-    LIKWID_MARKER_START("main");
+    LIKWID_MARKER_START("minQuad");
 
     start = timestamp();
     sistema = minimosQuadrados(sistema); //Aplica o método dos mínimos quadrados para ajuste de curva
     end = timestamp();
 
+    LIKWID_MARKER_STOP("minQuad");
     tgeraSL = end-start;
 
+    LIKWID_MARKER_START("gauss");
     start = timestamp();
     gauss(sistema);
     end = timestamp();
-
+    LIKWID_MARKER_START("gauss");
     tsolSL = end-start;
     
     // Imprime os coeficientes do polinômio
@@ -38,8 +40,6 @@ int main() {
 
     // Calcula e imprime os resíduos
     calculaResiduos(sistema);
-
-    LIKWID_MARKER_STOP("main");
 
     LIKWID_MARKER_CLOSE;
 

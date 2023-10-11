@@ -61,12 +61,12 @@ struct operandos calcularSubtracao(struct operandos x, struct operandos y) {
 
 // Parâmetro: structs operandos X e Y
 // Retorno: struct operandos com o resultado da multiplicação entre X e Y e seus intervalos
-struct operandos calcularMulticacao(struct operandos x, struct operandos y) {
+struct operandos calcularMultiplicacao(struct operandos x, struct operandos y) {
 
     struct operandos resultado;
     double aux[4];   
 
-    if ((fabs(x.num) < FLT_EPSILON) || (fabs(y.num) < FLT_EPSILON)) {
+    if ((fabs(x.num) < DBL_EPSILON) || (fabs(y.num) < DBL_EPSILON)) {
         resultado.num = 0.0;
         resultado.anterior = 0.0;
         resultado.posterior = 0.0;
@@ -172,11 +172,11 @@ struct operandos calcularExpo(struct operandos x, int expoente) {
         baseAnt = x.anterior;
         basePost = x.posterior;
     }
-    else if ((b.parts.sign == 1) && (fabs(x.posterior) > FLT_EPSILON)){      // [b^expoente,a^expoente], se expoente é par e b < 0
+    else if ((b.parts.sign == 1) && (fabs(x.posterior) > DBL_EPSILON)){      // [b^expoente,a^expoente], se expoente é par e b < 0
         baseAnt = x.posterior;
         basePost = x.anterior;
     }
-    else if ((a.parts.sign == 1) && ((b.parts.sign == 0) || (fabs(x.posterior) < FLT_EPSILON))) {  // [0,max{a^expoente,b^expoente}], se expoente é par e a < 0 ≤ b 
+    else if ((a.parts.sign == 1) && ((b.parts.sign == 0) || (fabs(x.posterior) < DBL_EPSILON))) {  // [0,max{a^expoente,b^expoente}], se expoente é par e a < 0 ≤ b 
         
         double max, aExp, bExp;
 
@@ -187,7 +187,7 @@ struct operandos calcularExpo(struct operandos x, int expoente) {
         bExp = (double) pow(x.posterior, expoente);
 
         // max recebe o maior valor, entre a^expoente e b^expoente
-        max = ((aExp - bExp) >= FLT_EPSILON) ? aExp : bExp;
+        max = ((aExp - bExp) >= DBL_EPSILON) ? aExp : bExp;
 
         resultado.num = (double) pow(x.num, expoente);
         resultado.anterior = 0;

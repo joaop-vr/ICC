@@ -22,7 +22,7 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
             for(int k = 0; k < sistema->qntdPontos; k++) {
                 aux1 = calcularExpo(sistema->tabelaPontos[2*k], i);
                 aux2 = calcularExpo(sistema->tabelaPontos[2*k], j);
-                aux3 = calcularMulticacao(aux1,aux2);
+                aux3 = calcularMultiplicacao(aux1,aux2);
                 sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
             }
         }
@@ -32,12 +32,10 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
         sistema->resultados[i] = calcularIntervalo(0.0);
         for (int k = 0; k < sistema->qntdPontos; k++) {
             aux1 = calcularExpo(sistema->tabelaPontos[2*k], i);
-            aux2 = calcularMulticacao(aux1,sistema->tabelaPontos[2*k+1]);
+            aux2 = calcularMultiplicacao(aux1,sistema->tabelaPontos[2*k+1]);
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
        }
     }
-
-    // Aplica a eliminação de gauss no sistema linear montado acima 
     return sistema;
 }
 
@@ -64,20 +62,19 @@ void gauss(struct ajustePol* sistema) {
             // Aplica as operações aritméticas sobre os valores da matriz de coeficientes do sistema linear,
             // ou seja, sobre os valores de A do sistema linear AX=B
             for (int j = i+1; j < sistema->grauPol; j++) {
-                aux = calcularMulticacao(sistema->matriz[i][j], m);
+                aux = calcularMultiplicacao(sistema->matriz[i][j], m);
                 sistema->matriz[k][j] = calcularSubtracao(sistema->matriz[k][j], aux);
             }
 
             // Aplica as operações aritméticas sobre os resultados de cada linha da matriz, 
             // ou seja, sobre os valores de B do sistema linear AX=B
-            aux = calcularMulticacao(sistema->resultados[i], m);
+            aux = calcularMultiplicacao(sistema->resultados[i], m);
             sistema->resultados[k] = calcularSubtracao(sistema->resultados[k], aux);
         }
     }
     
     // Aplica a retro substituição no sistema linear triangularizado
     retroSubst(sistema);
-    
 }
 
 // Varre a matriz da struct ajustePol e retorna o indice do maior double
@@ -127,7 +124,7 @@ void retroSubst(struct ajustePol* sistema) {
         // Aplica as operações aritméticas sobre os valores da matriz de coeficientes do sistema linear e
         // guarda o resultado no vetor dos coeficientes do polinômio
         for (int j = (i+1); j < sistema->grauPol; j++) {
-            aux = calcularMulticacao(sistema->matriz[i][j], sistema->coeficientes[j]);
+            aux = calcularMultiplicacao(sistema->matriz[i][j], sistema->coeficientes[j]);
             sistema->coeficientes[i] = calcularSubtracao(sistema->coeficientes[i], aux);
         }
 
@@ -147,7 +144,7 @@ struct operandos polinomio(struct ajustePol* sistema, struct operandos x0) {
     // para então multiplicar pelo coeficiente correspondente
     for (int i = 0; i < sistema->grauPol; i++) {
         aux1 = calcularExpo(x0, i);
-        aux2 = calcularMulticacao(sistema->coeficientes[i], aux1);
+        aux2 = calcularMultiplicacao(sistema->coeficientes[i], aux1);
         resultado = calcularSoma(resultado, aux2);
     }
 

@@ -23,7 +23,7 @@ typedef union
 
 
 /***************************
- * Struct struct operandos corresponde a estrutura de dados que contém 
+ * Struct struct operandos corresponde à estrutura de dados que contém 
  * o valor dos pontos e o intervalo em que estão inseridos
  * 
  * num = número (double) passado pelo usuário
@@ -38,7 +38,7 @@ struct operandos {
 };
 
 /***************************
- * Stuct ajustePol corresponde a estrutura de dados que engloba todos os vetores e matrizes que utilizamos 
+ * Struct ajustePol corresponde à estrutura de dados que engloba todos os vetores e matrizes que utilizamos 
  * para a implementação do método dos Mínimos Quadrados
  * 
  * grauPol = grau do polinômio

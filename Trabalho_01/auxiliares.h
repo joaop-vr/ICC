@@ -27,7 +27,7 @@ double max (double vet[4]);
 // Retorno: menor número do vetor (double)
 double min (double vet[4]);
 
-// Retorna um valor de tempo atual em milissegundos, usando o tempodo sistema operacional
+// Retorna um valor de tempo atual em milissegundos, usando o tempo do sistema operacional
 double timestamp(void);
 
 // Calcula e imprime o resíduo da cada valor de X gerado pelo polinômio encontrado

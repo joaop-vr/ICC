@@ -27,7 +27,7 @@ struct operandos calcularSubtracao(struct operandos x, struct operandos y);
 
 // Parâmetro: structs operandos X e Y
 // Retorno: struct operandos com o resultado da multiplicação entre X e Y e seus intervalos
-struct operandos calcularMulticacao(struct operandos x, struct operandos y);
+struct operandos calcularMultiplicacao(struct operandos x, struct operandos y);
 
 // Parâmetro: structs operandos X e Y
 // Retorno: struct operandos com o resultado da divisão de X por Y e seus intervalos
