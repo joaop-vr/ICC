@@ -3,7 +3,7 @@
 #include <string.h>
 #include <getopt.h>    /* getopt */
 #include <time.h>
-
+#include <likwid.h>
 #include "matriz.h"
 
 /**
@@ -17,7 +17,12 @@ static void usage(char *progname)
   exit(1);
 }
 
-
+double timestamp (void)
+{
+  struct timespec tp;
+  clock_gettime(CLOCK_MONOTONIC_RAW, &tp);
+  return ( (double) tp.tv_sec*1.0e3 + (double) tp.tv_nsec*1.0e-6 );
+}
 
 /**
  * Programa principal
@@ -28,8 +33,11 @@ static void usage(char *progname)
 
 int main (int argc, char *argv[]) 
 {
+
+  LIKWID_MARKER_INIT;
+
   int n=DEF_SIZE;
-  
+  double start, end;
   MatRow mRow_1, mRow_2, resMat;
   Vetor vet, res;
   
@@ -69,9 +77,19 @@ int main (int argc, char *argv[])
     printf ("=================================\n\n");
 #endif /* _DEBUG_ */
 
+  LIKWID_MARKER_START("matVet");
+  start = timestamp();
   multMatVet (mRow_1, vet, n, n, res);
-    
+  end = timestamp();
+  printf("%d ", end-start);
+  LIKWID_MARKER_STOP("matVet");
+
+  LIKWID_MARKER_START("matMat");
+  start = timestamp();
   multMatMat (mRow_1, mRow_2, n, resMat);
+  end = timestamp();
+  printf("%d ", end-start);
+  LIKWID_MARKER_STOP("matMat");
     
 #ifdef _DEBUG_
     prnVetor (res, n);
@@ -83,7 +101,8 @@ int main (int argc, char *argv[])
   liberaVetor ((void*) resMat);
   liberaVetor ((void*) vet);
   liberaVetor ((void*) res);
-
+  
+  LIKWID_MARKER_CLOSE;
   return 0;
 }
 
