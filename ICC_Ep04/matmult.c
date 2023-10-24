@@ -81,14 +81,14 @@ int main (int argc, char *argv[])
   start = timestamp();
   multMatVet (mRow_1, vet, n, n, res);
   end = timestamp();
-  printf("%d ", end-start);
+  printf("%lf ", end-start);
   LIKWID_MARKER_STOP("matVet");
 
   LIKWID_MARKER_START("matMat");
   start = timestamp();
   multMatMat (mRow_1, mRow_2, n, resMat);
   end = timestamp();
-  printf("%d ", end-start);
+  printf("%lf ", end-start);
   LIKWID_MARKER_STOP("matMat");
     
 #ifdef _DEBUG_
