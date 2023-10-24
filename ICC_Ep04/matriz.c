@@ -118,7 +118,13 @@ void multMatVet (MatRow mat, Vetor v, int m, int n, Vetor res)
         res[i] += mat[n*i + j] * v[j];
   }
 
-  
+  printf ("======== versao do prof =========\n\n");
+  prnMat (mat, n, n);
+  prnVetor (v, n);
+  printf ("=================================\n\n");
+
+  for (int i = 0; i < m; i ++) 
+    res[i] = 0;
 
   /******** Versão otimizada ****************/
   for (int i=0; i < n-n%UF; i+=UF) {
@@ -135,6 +141,10 @@ void multMatVet (MatRow mat, Vetor v, int m, int n, Vetor res)
       for (int j=0; j < n; ++j)
         res[i] += mat[n*i + j] * v[j];
 
+  printf ("======== nossa versao  =========\n\n");
+  prnMat (mat, n, n);
+  prnVetor (v, n);
+  printf ("=================================\n\n");
 
 }
 
@@ -158,7 +168,22 @@ void multMatMat (MatRow A, MatRow B, int n, MatRow C)
       for (int k=0; k < n; ++k)
 	      C[i*n+j] += A[i*n+k] * B[k*n+j];
 
+  printf ("======== versao do prof =========\n\n");
+  prnMat (A, n, n);
+  prnMat (B, n, n);
+  prnMat (C,n,n);
+  printf ("=================================\n\n");
 
+  for (int i=0; i < n; ++i)
+    for (int j=0; j < n; ++j)
+      for (int k=0; k < n; ++k)
+	      C[i*n+j] = 0;
+
+  printf ("======== resposta zerada ========\n\n");
+  prnMat (A, n, n);
+  prnMat (B, n, n);
+  prnMat (C,n,n);
+  printf ("=================================\n\n");
 
   /******** Versão otimizada ****************/
   int iStart, iEnd, jStart, jEnd, kStart, kEnd;
@@ -170,18 +195,24 @@ void multMatMat (MatRow A, MatRow B, int n, MatRow C)
         kStart=kk*BK; kEnd=kStart+BK;
         for (int i=iStart; i<iEnd; ++i) {
           for (int j=jStart; j<jEnd; j+=UF) {
-            C[n*i + j] = C[n*(i+1) + j] = C[n*(i+2) + j] = C[n*(i+3) + j]= 0.0;
+            C[n*i + j] = C[n*i + j+1] = C[n*i + j+2] = C[n*i + j+3]= 0.0;
             for (int k=kStart; k<kEnd; ++k) {
               C[n*i + j] += A[n*i + k]*B[n*k + j];
-              C[n*(i+1) + j] += A[n*(i+1) + k]*B[n*(k+1) + j];
-              C[n*(i+2) + j] += A[n*(i+2) + k]*B[n*(k+2) + j];
-              C[n*(i+3) + j] += A[n*(i+3) + k]*B[n*(k+3) + j];
+              C[n*i + j+1] += A[n*i + k]*B[n*k + j+1];
+              C[n*i + j+2] += A[n*i + k]*B[n*k + j+2];
+              C[n*i + j+3] += A[n*i + k]*B[n*k + j+3];
             }
           }
         }
       }
     }
   }
+
+  printf ("======== nossa versao  =========\n\n");
+  prnMat (A, n, n);
+  prnMat (B, n, n);
+  prnMat (C,n,n);
+  printf ("=================================\n\n");
 
 
 }
