@@ -88,7 +88,7 @@ int main (int argc, char *argv[])
   start = timestamp();
   multMatMat (mRow_1, mRow_2, n, resMat);
   end = timestamp();
-  printf("%lf ", end-start);
+  printf("%lf\n", end-start);
   LIKWID_MARKER_STOP("matMat");
     
 #ifdef _DEBUG_

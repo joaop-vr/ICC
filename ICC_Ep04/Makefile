@@ -6,7 +6,7 @@ LIKWID_HOME=/home/soft/likwid
 # Compilador
            CC = gcc -Wall
 
-       CFLAGS = -O3 -mavx -march=native -I ${LIKWID_HOME}/include -L ${LIKWID_HOME}/lib
+       CFLAGS = -O3 -mavx2 -march=native -I ${LIKWID_HOME}/include -L ${LIKWID_HOME}/lib
        LFLAGS = -lm -llikwid -DLIKWID_PERFMON
 
 # Lista de arquivos para distribuição

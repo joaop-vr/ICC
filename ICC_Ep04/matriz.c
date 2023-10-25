@@ -136,10 +136,13 @@ void multMatVet (MatRow mat, Vetor v, int m, int n, Vetor res)
     }
   }
     
-    // resíduo do laço
-    for (int i=n-n%UF; i < n; ++i)
-      for (int j=0; j < n; ++j)
-        res[i] += mat[n*i + j] * v[j];
+  // resíduo do laço
+  int NI;
+  for (int i=n-n%UF; i < n; ++i) {
+    NI = n*i;
+    for (int j=0; j < n; ++j)
+      res[i] += mat[NI + j] * v[j];
+  }
 
   printf ("======== nossa versao  =========\n\n");
   prnMat (mat, n, n);
@@ -172,21 +175,20 @@ void multMatMat (MatRow A, MatRow B, int n, MatRow C)
   prnMat (A, n, n);
   prnMat (B, n, n);
   prnMat (C,n,n);
-  printf ("=================================\n\n");
 
   for (int i=0; i < n; ++i)
     for (int j=0; j < n; ++j)
       for (int k=0; k < n; ++k)
 	      C[i*n+j] = 0;
 
-  printf ("======== resposta zerada ========\n\n");
+  /*printf ("======== resposta zerada ========\n\n");
   prnMat (A, n, n);
   prnMat (B, n, n);
   prnMat (C,n,n);
-  printf ("=================================\n\n");
+  printf ("=================================\n\n");*/
 
   /******** Versão otimizada ****************/
-  int iStart, iEnd, jStart, jEnd, kStart, kEnd;
+  int iStart, iEnd, jStart, jEnd, kStart, kEnd, NI, NK;
   for (int ii=0; ii<n/BK; ++ii) {
     iStart=ii*BK; iEnd=iStart+BK;
     for (int jj=0; jj<n/BK; ++jj) {
@@ -194,14 +196,23 @@ void multMatMat (MatRow A, MatRow B, int n, MatRow C)
       for (int kk=0; kk<n/BK; ++kk) {
         kStart=kk*BK; kEnd=kStart+BK;
         for (int i=iStart; i<iEnd; ++i) {
+          NI = n*i;
           for (int j=jStart; j<jEnd; j+=UF) {
-            C[n*i + j] = C[n*i + j+1] = C[n*i + j+2] = C[n*i + j+3]= 0.0;
+            C[NI + j] = 0.0;
+            C[NI + j+1] = 0.0;
+            C[NI + j+2] = 0.0;
+            C[NI + j+3]= 0.0;
             for (int k=kStart; k<kEnd; ++k) {
-              C[n*i + j] += A[n*i + k]*B[n*k + j];
-              C[n*i + j+1] += A[n*i + k]*B[n*k + j+1];
-              C[n*i + j+2] += A[n*i + k]*B[n*k + j+2];
-              C[n*i + j+3] += A[n*i + k]*B[n*k + j+3];
+              NK = n*k;
+              C[NI + j] += A[NI + k]*B[NK+ j];
+              C[NI + j+1] += A[NI + k]*B[NK+ j+1];
+              C[NI + j+2] += A[NI + k]*B[NK+ j+2];
+              C[NI + j+3] += A[NI + k]*B[NK+ j+3];
             }
+            
+            for (int j=n-n%BK; j < n; ++j)
+              for (int k=0; k < n; ++k)
+                C[NI + j] += A[NI + k]*B[NK + j];
           }
         }
       }
