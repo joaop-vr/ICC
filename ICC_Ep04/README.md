@@ -52,10 +52,10 @@ Eliminamos as subexpressões recorrentes no código. Por exemplo, optamos por el
 
 e declaramos as variáveis NI, NK e NI_K, que recebem n*i, n*k e NI+k respectivamente. Dessa forma, a ocorrência de multiplicações e somas desnecessárias diminuem, resultando em
               
-    C[NI + j] += A[NI_K]*B[NK+ j];
-    C[NI + j+1] += A[NI_K]*B[NK+ j+1];
-    C[NI + j+2] += A[NI_K]*B[NK+ j+2];
-    C[NI + j+3] += A[NI_K]*B[NK+ j+3];
+    C[NI + j] += A[NI_K] * B[NK+ j];
+    C[NI + j+1] += A[NI_K] * B[NK+ j+1];
+    C[NI + j+2] += A[NI_K] * B[NK+ j+2];
+    C[NI + j+3] += A[NI_K] * B[NK+ j+3];
     
 
 # Alising
