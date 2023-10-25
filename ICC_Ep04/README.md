@@ -1,73 +1,74 @@
-<h1> Orientações gerais </h1>
+# EP-04 - Otimização de Código Serial
 
-O enunciado do exercício está <A HREF="https://moodle.c3sl.ufpr.br/mod/assign/view.php?id=47421">aqui</a>
-<BR>
-<BR>
-O arquivo <B>perfctr</B> é um <I>script</I> shell para facilitar o uso de <I>likwid-perfctr</I>.
-<BR><BR>
+O objetivo deste exercício é melhorar a performance de funções de multiplicação de matrizes e de vetores, para posteriormente analisar o desempenho referente a tempo, memória, cache, energia e FLOPS.
 
-O arquivo <B>LIKWID-INSTALL.txt</B> são orientações APENAS para os alunos que desenvolvem este execício em uma instalação LINUX standalone. Estas orientações não devem ser seguidas caso sejam usadas as máquinas do LAB-3/DINF. 
+## Índice
 
-<h1> GUIA DE ACESSO ÀS MÁQUINAS DO LABORATÓRIO LAB12 / DINF </h1>
+- [Autores]
+- [Descrição]
+- [Otimizações]
+- [Limitações]
 
-Nos acessos abaixo, sempre use seu login/senha nas máquinas do DINF
+## Autores
 
-<ol>
-<LI> Copiar seus arquivos locais para a máquina 'macalan':
+Joao Pedro Vicente Ramalho - 20224169
+Mateus Kater Pombeiro - 20190366
 
-      scp -rp <sua_pasta_com_exercicio> <user_dinf>@macalan.c3sl.ufpr.br:.
+## Descrição
 
-<LI> Acessar 'macalan' com
+A tarefa consiste em melhorar a performance das operações abaixo, usando as técnicas vistas em aula, inclusive (mas não restritos a) unroll & jam + blocking e usando a ferramenta LIKWID para comparar as performances e tempos com e sem otimização:
 
-      ssh <user_dinf>@macalan.c3sl.ufpr.br
+  multMatVet() --> multiplica uma matriz tipo MatRow por um vetor
+  multMatMat() --> multiplica duas matrizes de tipo MatRow
+  
+São definidos 2 tipos abstratos de dados (vide arquivo matriz.h):
 
-<LI> Uma vez na 'macalan'
+  MatRow: tipo para representar uma matriz implementada como um único vetor cujo conteúdo são as linhas da matriz, em sequencia;
+  Vetor:   tipo para representar um vetor simples.
+  
+O fator de unroll UF e o fator de blocking BK estão definidos via macros em linguagem C no arquivo matriz.h .
 
-     ssh <maq_DINF>
+## Otimizações
 
-        onde <maq_LAB12_DINF> = hxx, conforme o computador utilizado
+# Alocação de memória sequencial
 
-
-<LI> <B>ATENÇÃO:</B> Lembre-se de RECOMPILAR SEUS PROGRAMAS em <B>maq_LAB12_DINF</B>
-</ol>
-
-
-<h1> GUIA DE CONFIGURAÇÃO DE FREQUENCIA DE RELÓGIO EM LINUX </h1>
-<ol>
-<LI> Execute a seguinte linha de comando:
-
-     echo "performance" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor
-
-<LI> Para retornar à frequencia original
-
-     echo "powersave" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor
-</ol>
-
-<h1> GUIA DE CONFIGURAÇÃO DO LINUX PARA USO DO LIKWID </h1>
-<ol>
-<LI> Acrescentar linhas abaixo em '${HOME}/.bashrc' ou '/etc/profile':
-
-       export LIKWID_HOME="/home/soft/likwid"
- 
-       if [ -d "${LIKWID_HOME}" ] ; then
-	        PATH="$PATH:${LIKWID_HOME}/bin:${LIKWID_HOME}/sbin"
-	        export LIKWID_LIB="${LIKWID_HOME}/lib"
-	        export LIKWID_INCLUDE="${LIKWID_HOME}/include"
-	        export LIKWID_MAN="${LIKWID_HOME}/man"
-	        export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${LIKWID_LIB}"
-	        export MANPATH="$MANPATH:${LIKWID_MAN}"
-       fi
-     
-
-<LI> Opções para compilação de programas:
-
-       gcc -DLIKWID_PERFMON -I${LIKWID_INCLUDE} -c <prog.c>
-       gcc -o <prog> <prog.o> -L${LIKWID_LIB} -llikwid
+As matrizes foram alocadas como um único vetor cujo conteúdo são as linhas da matriz, em sequencia. Dessa forma, ao invés de acessar o conteúdo das matrizes usando dois indices (ex.: A[i][j]),
+acessou-se por meio do cáculo A[n*i + j], sendo "n" a ordem da matriz.
 
 
-       * Nos códigos-fonte deve-se colocar
+# Unroll & Jam
 
-            #include <likwid.h>
+Foi aplicado nas funções multMatVet() e multMatMat(), de forma a atravessar os laços de repetições com stride de UF (fator de unroll, declarado em matriz.h)
 
-</OL>
 
+# Subexpressões Comuns
+
+Eliminamos as subexpressões recorrentes no código. Por exemplo, optamos por eliminar repetições do tipo
+
+    C[n*i + j] += A[n*i + k] * B[n*k + j];
+    C[n*i + j+1] += A[n*i + k] * B[n*k + j+1];
+    C[n*i + j+2] += A[n*i + k] * B[n*k + j+2];
+    C[n*i + j+3] += A[n*i + k] * B[n*k + j+3];
+
+e declaramos as variáveis NI, NK e NI_K, que recebem n*i, n*k e NI+k respectivamente. Dessa forma, a ocorrência de multiplicações e somas desnecessárias diminuem, resultando em
+              
+    C[NI + j] += A[NI_K] * B[NK+ j];
+    C[NI + j+1] += A[NI_K] * B[NK+ j+1];
+    C[NI + j+2] += A[NI_K] * B[NK+ j+2];
+    C[NI + j+3] += A[NI_K] * B[NK+ j+3];
+    
+
+# Alising
+
+Declaramos as tags "restrict" nas funções multMatVet() e multMatMat()
+
+  void multMatMat (MatRow restrict A, MatRow restrict B, int n, MatRow restrict C)
+  void multMatVet (MatRow restrict mat, Vetor restrict v, int m, int n, Vetor restrict res)
+  
+pois assim explicitamos ao compilador que não há alias, ou seja, as estruturas de dados passadas como parâmetros não apontam para o mesmo objeto. Dessa forma, o compilador poderá 
+efetuar eventuais otimizações sem se preocupar com dependências de dados.
+
+
+## Limitações
+
+Durante os testes não foram detectadas limitações do programa.
