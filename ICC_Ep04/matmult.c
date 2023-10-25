@@ -76,19 +76,22 @@ int main (int argc, char *argv[])
     prnVetor (vet, n);
     printf ("=================================\n\n");
 #endif /* _DEBUG_ */
-
   LIKWID_MARKER_START("matVet");
+  FILE matvet = fopen("matVet_t.dat",'a');
   start = timestamp();
   multMatVet (mRow_1, vet, n, n, res);
   end = timestamp();
-  printf("%lf ", end-start);
+  fprintf(matvet,"%lf", end-start);
+  fclose(matvet);
   LIKWID_MARKER_STOP("matVet");
 
   LIKWID_MARKER_START("matMat");
+  FILE matmat = fopen("matMat_t.dat",'a');
   start = timestamp();
   multMatMat (mRow_1, mRow_2, n, resMat);
   end = timestamp();
-  printf("%lf\n", end-start);
+  fprintf(matmat,"%lf", end-start);
+  fclose(matmat);
   LIKWID_MARKER_STOP("matMat");
     
 #ifdef _DEBUG_
