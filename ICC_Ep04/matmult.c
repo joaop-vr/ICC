@@ -77,7 +77,7 @@ int main (int argc, char *argv[])
     printf ("=================================\n\n");
 #endif /* _DEBUG_ */
   LIKWID_MARKER_START("matVet");
-  FILE matvet = fopen("matVet_t.dat",'a');
+  FILE* matvet = fopen("matVet_time.dat","a");
   start = timestamp();
   multMatVet (mRow_1, vet, n, n, res);
   end = timestamp();
@@ -86,7 +86,7 @@ int main (int argc, char *argv[])
   LIKWID_MARKER_STOP("matVet");
 
   LIKWID_MARKER_START("matMat");
-  FILE matmat = fopen("matMat_t.dat",'a');
+  FILE* matmat = fopen("matMat_time.dat","a");
   start = timestamp();
   multMatMat (mRow_1, mRow_2, n, resMat);
   end = timestamp();

@@ -7,8 +7,9 @@ do
     for n in 64 100 128 200 256 512 600 900 1024 2000 2048 3000 4000 
     do
         echo "$n " >> ${function}_time.dat
+	echo "rodando matriz $n para funcao $function"
         ./matmult $n
-        echo "\n" >> ${function}_time.dat
+        echo $"\n" >> ${function}_time.dat
     done
 
     > ${function}_mem.dat
@@ -16,7 +17,7 @@ do
     do
         echo "$n " >> ${function}_mem.dat
         likwid-perfctr -C 3 -g MEM ./matmult $n # nao funciona (???)
-        echo "\n" >> ${function}_mem.dat
+        echo $"\n" >> ${function}_mem.dat
     done
 
     > ${function}_cache.dat
@@ -24,7 +25,7 @@ do
     do
         echo "$n " >> ${function}_cache.dat
         likwid-perfctr -C 3 -g CACHE ./matmult $n | grep "miss ratio" | cut -d' ' -f9 >> ${function}_cache.dat
-        echo "\n" >> ${function}_cache.dat
+        echo $"\n" >> ${function}_cache.dat
     done
 
     > ${function}_energy.dat
@@ -32,15 +33,15 @@ do
     do
         echo "$n " >> ${function}_energy.dat
         likwid-perfctr -C 3 -g ENERGY ./matmult $n | grep "Energy Core" | cut -d' ' -f16
-        echo "\n" >> ${function}_energy.dat
+        echo $"\n" >> ${function}_energy.dat
     done
 
     > ${function}_flops.dat
     for n in 64 100 128 200 256 512 600 900 1024 2000 2048 3000 4000 
     do
         echo "$n " >> ${function}_flops.dat
-        likwid-perfctr -C 3 -g ENERGY -m ./matmult $n
-        echo "\n" >> ${function}_flops.dat
+        likwid-perfctr -C 3 -g ENERGY ./matmult $n
+        echo $"\n" >> ${function}_flops.dat
     done
     # echo "powersave" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor
 done
