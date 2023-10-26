@@ -123,9 +123,13 @@ void multMatVet (MatRow restrict mat, Vetor restrict v, int m, int n, Vetor rest
   prnVetor (v, n);
   printf ("=================================\n\n");
 	#endif
+
   for (int i = 0; i < m; i ++) 
     res[i] = 0;
-	#ifdef _DEBUG_
+  
+}
+
+void multMatVet_opt(MatRow restrict mat, Vetor restrict v, int m, int n, Vetor restrict res){
   /******** Versão otimizada ****************/
   for (int i=0; i < n-n%UF; i+=UF) {
     for (int j=0; j<n; ++j){
@@ -135,7 +139,6 @@ void multMatVet (MatRow restrict mat, Vetor restrict v, int m, int n, Vetor rest
       res[i+3] += mat[n*(i+3) + j] * v[j];
     }
   }
-    	#endif
   // resíduo do laço
   int NI;
   for (int i=n-n%UF; i < n; ++i) {
@@ -143,6 +146,7 @@ void multMatVet (MatRow restrict mat, Vetor restrict v, int m, int n, Vetor rest
     for (int j=0; j < n; ++j)
       res[i] += mat[NI + j] * v[j];
   }
+  
 	#ifdef _DEBUG_
   printf ("======== nossa versao  =========\n\n");
   prnMat (mat, n, n);
@@ -150,8 +154,6 @@ void multMatVet (MatRow restrict mat, Vetor restrict v, int m, int n, Vetor rest
   printf ("=================================\n\n");
 	#endif
 }
-
-
 /**
  *  Funcao multMatMat: Efetua multiplicacao de duas matrizes 'n x n' 
  *  @param A matriz 'n x n'
@@ -180,6 +182,7 @@ void multMatMat (MatRow restrict A, MatRow restrict B, int n, MatRow restrict C)
     for (int j=0; j < n; ++j)
       for (int k=0; k < n; ++k)
 	      C[i*n+j] = 0;
+
 	#ifdef _DEBUG_
   /*printf ("======== resposta zerada ========\n\n");
   prnMat (A, n, n);
@@ -187,6 +190,10 @@ void multMatMat (MatRow restrict A, MatRow restrict B, int n, MatRow restrict C)
   prnMat (C,n,n);
   printf ("=================================\n\n");*/
 	#endif
+
+}
+
+void multMatMat_opt(MatRow restrict A, MatRow restrict B, int n, MatRow restrict C){
   /******** Versão otimizada ****************/
   int iStart, iEnd, jStart, jEnd, kStart, kEnd, NI, NK;
   for (int ii=0; ii<n/BK; ++ii) {
@@ -225,9 +232,7 @@ void multMatMat (MatRow restrict A, MatRow restrict B, int n, MatRow restrict C)
   prnMat (C,n,n);
   printf ("=================================\n\n");
 	#endif
-
 }
-
 
 /**
  *  Funcao prnMat:  Imprime o conteudo de uma matriz em stdout
