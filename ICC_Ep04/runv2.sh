@@ -18,24 +18,24 @@ do
     ./matmult $n
     echo >> time.dat
 
-    # echo -n "$n " >> mem.dat
-    # echo "Executando $n e pegando memoria..."
-    # likwid-perfctr -O -C 3 -g MEM -m ./matmult $n | grep "Memory bandwidth" | cut -d',' -f2 | tr "\n" " " >> mem.dat # nao funciona (???)
-    # echo >> mem.dat
+    echo -n "$n " >> mem.dat
+    echo "Executando $n e pegando memoria..."
+    likwid-perfctr -O -C 1 -g L3 -m ./matmult $n | grep "L3 bandwidth" | cut -d',' -f2 | tr "\n" " " >> mem.dat # nao funciona (???)
+    echo >> mem.dat
 
     echo -n "$n " >> cache.dat
     echo "Executando $n e pegando cache..."
-    likwid-perfctr -O -C 3 -g CACHE -m ./matmult $n | grep "miss ratio" | cut -d',' -f2 | tr "\n" " " >> cache.dat
+    likwid-perfctr -O -C 1 -g L2CACHE -m ./matmult $n | grep "miss ratio" | cut -d',' -f2 | tr "\n" " " >> cache.dat
     echo >> cache.dat
 
     echo -n "$n " >> energy.dat
     echo "Executando $n e pegando energia..."
-    likwid-perfctr -O -C 3 -g ENERGY -m ./matmult $n | grep -e "Energy Core" -e "Energy \[J\]" | cut -d',' -f2 | tr "\n" " " >> energy.dat
+    likwid-perfctr -O -C 1 -g ENERGY -m ./matmult $n | grep -e "Energy Core" -e "Energy \[J\]" | cut -d',' -f2 | tr "\n" " " >> energy.dat
     echo >> energy.dat
 
     echo -n "$n " >> flops.dat
     echo "Executando $n e pegando flops..."
-    likwid-perfctr -O -C 3 -g FLOPS_DP -m ./matmult $n | grep "DP " | cut -d',' -f2 | tr "\n" " " >> flops.dat
+    likwid-perfctr -O -C 1 -g FLOPS_DP -m ./matmult $n | grep "DP " | cut -d',' -f2 | tr "\n" " " >> flops.dat
     echo >> flops.dat
 done
 
