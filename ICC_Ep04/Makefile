@@ -6,8 +6,8 @@ LIKWID_HOME=/home/soft/likwid
 # Compilador
            CC = gcc -Wall
 
-       CFLAGS = -O3 -mavx2 -march=native -I ${LIKWID_HOME}/include -L ${LIKWID_HOME}/lib
-       LFLAGS = -lm -llikwid -DLIKWID_PERFMON
+       CFLAGS = -O3 -mavx2 -march=native -I ${LIKWID_HOME}/include -L ${LIKWID_HOME}/lib -DLIKWID_PERFMON
+       LFLAGS = -lm -llikwid
 
 # Lista de arquivos para distribuição
 DISTFILES = *.c *.h README.md Makefile perfctr
