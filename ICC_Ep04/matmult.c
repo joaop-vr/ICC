@@ -106,7 +106,7 @@ int main (int argc, char *argv[])
   LIKWID_MARKER_START("matMatOpt");
   FILE* matmatopt = fopen("matMatOpt_time.dat","a");
   start = timestamp();
-  multMatMat (mRow_1, mRow_2, n, resMat);
+  multMatMat_opt (mRow_1, mRow_2, n, resMat);
   end = timestamp();
   fprintf(matmatopt,"%d %lf\n", n, end-start);
   fclose(matmatopt);
