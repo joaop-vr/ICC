@@ -51,14 +51,25 @@ int main (int argc, char *argv[])
   /* ================ FIM DO TRATAMENTO DE LINHA DE COMANDO ========= */
  
   srandom(20232);
+  
+  if (ehPontenciaDe2(n)) {
+    res = geraVetor (n, 0); // (real_t *) malloc (n*sizeof(real_t));
+    resMat = geraMatRow(n, n, 1);
       
-  res = geraVetor (n, 0); // (real_t *) malloc (n*sizeof(real_t));
-  resMat = geraMatRow(n, n, 1);
-    
-  mRow_1 = geraMatRow (n, n, 0);
-  mRow_2 = geraMatRow (n, n, 0);
+    mRow_1 = geraMatRow (n, n, 0);
+    mRow_2 = geraMatRow (n, n, 0);
 
-  vet = geraVetor (n, 0);
+    vet = geraVetor (n, 0);
+  } else {
+    res = geraVetor (n+1, 0); // (real_t *) malloc (n*sizeof(real_t));
+    resMat = geraMatRow(n+1, n+1, 1);
+      
+    mRow_1 = geraMatRow (n+1, n+1, 0);
+    mRow_2 = geraMatRow (n+1, n+1, 0);
+
+    vet = geraVetor (n+1, 0);
+  }
+  
 
   if (!res || !resMat || !mRow_1 || !mRow_2 || !vet) {
     fprintf(stderr, "Falha em alocação de memória !!\n");
@@ -76,6 +87,8 @@ int main (int argc, char *argv[])
     prnVetor (vet, n);
     printf ("=================================\n\n");
 #endif /* _DEBUG_ */
+
+  /* =============== MAT VET PADRÃO =============== */
   LIKWID_MARKER_START("matVet");
   FILE* matvet = fopen("matVet_time.dat","a");
   start = timestamp();
@@ -85,6 +98,7 @@ int main (int argc, char *argv[])
   fclose(matvet);
   LIKWID_MARKER_STOP("matVet");
 
+  /* =============== MAT VET OTIMIZADO =============== */
   LIKWID_MARKER_START("matVetOpt");
   FILE* matvetopt = fopen("matVetOpt_time.dat","a");
   start = timestamp();
@@ -94,6 +108,7 @@ int main (int argc, char *argv[])
   fclose(matvetopt);
   LIKWID_MARKER_STOP("matVetOpt");
 
+  /* =============== MAT MAT PADRÃO =============== */
   LIKWID_MARKER_START("matMat");
   FILE* matmat = fopen("matMat_time.dat","a");
   start = timestamp();
@@ -103,6 +118,7 @@ int main (int argc, char *argv[])
   fclose(matmat);
   LIKWID_MARKER_STOP("matMat");
   
+  /* =============== MAT MAT OTIMIZADO =============== */
   LIKWID_MARKER_START("matMatOpt");
   FILE* matmatopt = fopen("matMatOpt_time.dat","a");
   start = timestamp();

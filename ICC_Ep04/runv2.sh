@@ -1,4 +1,4 @@
-# echo "performance" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor
+echo "performance" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor
 
 # likwid-perfctr -C ${CPU} -g ${k} -m ./teste >${k}_SemOtimiz.log
 
@@ -40,4 +40,4 @@ do
 done
 
 ./test.gp
-# echo "powersave" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor
+echo "powersave" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor

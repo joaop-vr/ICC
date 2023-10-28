@@ -117,6 +117,7 @@ void multMatVet (MatRow restrict mat, Vetor restrict v, int m, int n, Vetor rest
       for (int j=0; j < n; ++j)
         res[i] += mat[n*i + j] * v[j];
   }
+
 	#ifdef _DEBUG_
   printf ("======== versao do prof =========\n\n");
   prnMat (mat, n, n);
@@ -129,7 +130,8 @@ void multMatVet (MatRow restrict mat, Vetor restrict v, int m, int n, Vetor rest
   
 }
 
-void multMatVet_opt(MatRow restrict mat, Vetor restrict v, int m, int n, Vetor restrict res){
+void multMatVet_opt(MatRow restrict mat, Vetor restrict v, int m, int n, Vetor restrict res) {
+
   /******** Versão otimizada ****************/
   for (int i=0; i < n-n%UF; i+=UF) {
     for (int j=0; j<n; ++j){
@@ -172,12 +174,14 @@ void multMatMat (MatRow restrict A, MatRow restrict B, int n, MatRow restrict C)
     for (int j=0; j < n; ++j)
       for (int k=0; k < n; ++k)
 	      C[i*n+j] += A[i*n+k] * B[k*n+j];
+
 	#ifdef _DEBUG_
   printf ("======== versao do prof =========\n\n");
   prnMat (A, n, n);
   prnMat (B, n, n);
   prnMat (C,n,n);
 	#endif
+  
   for (int i=0; i < n; ++i)
     for (int j=0; j < n; ++j)
       for (int k=0; k < n; ++k)
@@ -193,7 +197,8 @@ void multMatMat (MatRow restrict A, MatRow restrict B, int n, MatRow restrict C)
 
 }
 
-void multMatMat_opt(MatRow restrict A, MatRow restrict B, int n, MatRow restrict C){
+void multMatMat_opt(MatRow restrict A, MatRow restrict B, int n, MatRow restrict C) {
+
   /******** Versão otimizada ****************/
   int iStart, iEnd, jStart, jEnd, kStart, kEnd, NI, NK;
   for (int ii=0; ii<n/BK; ++ii) {
@@ -225,6 +230,7 @@ void multMatMat_opt(MatRow restrict A, MatRow restrict B, int n, MatRow restrict
       }
     }
   }
+
 	#ifdef _DEBUG_
   printf ("======== nossa versao  =========\n\n");
   prnMat (A, n, n);
@@ -264,5 +270,14 @@ void prnVetor (Vetor vet, int n)
   for (int i=0; i < n; ++i)
     printf(DBL_FIELD, vet[i]);
   printf(SEP_RES);
+}
+
+int ehPotenciaDe2(int n) {
+  if (n <= 0) {
+        return 0; // Números negativos ou zero não são potências de 2
+    }
+
+    // Verifica se há exatamente um bit definido como 1
+    return (n & (n - 1)) == 0;
 }
 
