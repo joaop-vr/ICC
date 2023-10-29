@@ -90,7 +90,6 @@ int main (int argc, char *argv[])
     printf ("=================================\n\n");
 #endif /* _DEBUG_ */
 
-  printf("Tempos : ");
   /* =============== MAT VET PADRÃO =============== */
   LIKWID_MARKER_START("matVet");
   // FILE* matvet = fopen("matVet_time.dat","a");

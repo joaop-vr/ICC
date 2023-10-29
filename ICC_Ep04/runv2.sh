@@ -15,7 +15,7 @@ do
     echo -n "$n " >> time.dat
     echo "Executando $n e pegando tempo..."
     # echo "rodando matriz $n para funcao $function"
-    ./matmult $n
+    ./matmult $n >> time.dat
     echo >> time.dat
 
     echo -n "$n " >> mem.dat
