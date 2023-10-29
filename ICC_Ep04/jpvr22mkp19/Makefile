@@ -10,7 +10,7 @@ LIKWID_HOME=/home/soft/likwid
        LFLAGS = -lm -llikwid
 
 # Lista de arquivos para distribuição
-DISTFILES = *.c *.h README.md Makefile perfctr
+DISTFILES = *.c *.h README.md Makefile gera_graficos.gp run.sh
 DISTDIR = `basename ${PWD}`
 
 .PHONY: all debug clean purge dist

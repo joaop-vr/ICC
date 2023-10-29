@@ -5,6 +5,7 @@ O objetivo deste exercício é melhorar a performance de funções de multiplica
 ## Índice
 
 - [Autores]
+- [Arquitetura]
 - [Descrição]
 - [Otimizações]
 - [Limitações]
@@ -13,8 +14,6 @@ O objetivo deste exercício é melhorar a performance de funções de multiplica
 
 Joao Pedro Vicente Ramalho - 20224169
 Mateus Kater Pombeiro - 20190366
-
-## Descrição
 
 ## Documentação da arquitetura do processador utlizado:
 
@@ -42,7 +41,7 @@ HWThread Thread Core Socket Available
 
 ---
 
-## Socket 0: ( 0 1 2 3 )
+> > Socket 0: ( 0 1 2 3 )
 
 ---
 
@@ -92,7 +91,7 @@ NUMA Topology
 
 ---
 
-## NUMA domains: 1
+> > NUMA domains: 1
 
 Domain: 0
 Processors: ( 0 1 2 3 )
@@ -124,6 +123,8 @@ Socket 0:
 | +-----------------------------------------+ |
 +---------------------------------------------+
 
+## Descrição
+
 A tarefa consiste em melhorar a performance das operações abaixo, usando as técnicas vistas em aula, inclusive (mas não restritos a) unroll & jam + blocking e usando a ferramenta LIKWID para comparar as performances e tempos com e sem otimização:
 
 multMatVet() --> multiplica uma matriz tipo MatRow por um vetor
@@ -146,6 +147,10 @@ acessou-se por meio do cáculo A[n*i + j], sendo "n" a ordem da matriz.
 # Unroll & Jam
 
 Foi aplicado nas funções multMatVet() e multMatMat(), de forma a atravessar os laços de repetições com stride de UF (fator de unroll, declarado em matriz.h)
+
+# Blocking
+
+Foi aplicado nas funções referentes à multiplicação de matriz por matriz. dessa forma, dividimos as matrizes em blocos que caibam na Cache
 
 # Subexpressões Comuns
 

@@ -39,5 +39,5 @@ do
     echo >> flops.dat
 done
 
-./test.gp
+./gera_graficos.gp
 echo "powersave" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor
