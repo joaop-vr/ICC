@@ -54,7 +54,7 @@ int main (int argc, char *argv[])
   
 	//mRow_1 = geraMatRow(n,n,1);
 	//mRow_2 = geraMatRow(n,n,1);
-  if (ehPontenciaDe2(n)) {
+  if (ehPotenciaDe2(n)) {
 	res = geraVetor (n, 1);
     res = geraVetor (n, 0); // (real_t *) malloc (n*sizeof(real_t));
     resMat = geraMatRow(n, n, 1);

@@ -35,4 +35,4 @@ void multMatMat_opt (MatRow restrict A, MatRow restrict B, int n, Vetor restrict
 void prnMat (MatRow mat, int m, int n);
 void prnVetor (Vetor vet, int n);
 
-int ehPontenciaDe2(int n);
+int ehPotenciaDe2(int n);
