@@ -50,8 +50,14 @@ set ylabel "MFLOP/s"
 set output "FLOPS_DP.png"
 set title "FLOPS"
 set terminal qt 1 title "FLOPS"
-plot 'flops.dat' using 1:2 title "matVet" with linespoints, \
-     '' using 1:3 title "matVetOpt" with linespoints, '' using 1:4 title "matMat" with linespoints, '' using 1:5 title "matMatOpt" with linespoints
+plot 'flops.dat' using 1:2 title "matVet FLOPS_DP" with linespoints, \
+     '' using 1:4 title "matVetOpt FLOPS_DP" with linespoints, \
+     '' using 1:6 title "matMat FLOPS_DP" with linespoints, \
+     '' using 1:8 title "matMatOpt FLOPS_DP" with linespoints, \
+     '' using 1:3 title "matVet FLOPS_AVX" with linespoints, \
+     '' using 1:5 title "matVetOpt FLOPS_AVX" with linespoints, \
+     '' using 1:7 title "matMat FLOPS_AVX" with linespoints, \
+     '' using 1:9 title "matMatOpt FLOPS_AVX" with linespoints
 
 pause -1
 
