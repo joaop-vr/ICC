@@ -91,44 +91,45 @@ int main (int argc, char *argv[])
     printf ("=================================\n\n");
 #endif /* _DEBUG_ */
 
+  printf("Tempos : ");
   /* =============== MAT VET PADRÃO =============== */
   LIKWID_MARKER_START("matVet");
-  FILE* matvet = fopen("matVet_time.dat","a");
+  // FILE* matvet = fopen("matVet_time.dat","a");
   start = timestamp();
   multMatVet (mRow_1, vet, n, n, res);
   end = timestamp();
-  fprintf(matvet,"%d %lf\n", n, end-start);
-  fclose(matvet);
+  printf("%lf ", end-start);
+  // fclose(matvet);
   LIKWID_MARKER_STOP("matVet");
 
   /* =============== MAT VET OTIMIZADO =============== */
   LIKWID_MARKER_START("matVetOpt");
-  FILE* matvetopt = fopen("matVetOpt_time.dat","a");
+  // FILE* matvetopt = fopen("matVetOpt_time.dat","a");
   start = timestamp();
   multMatVet_opt (mRow_1, vet, n, n, res);
   end = timestamp();
-  fprintf(matvetopt,"%d %lf\n", n, end-start);
-  fclose(matvetopt);
+  printf("%lf ",end-start);
+  // fclose(matvetopt);
   LIKWID_MARKER_STOP("matVetOpt");
 
   /* =============== MAT MAT PADRÃO =============== */
   LIKWID_MARKER_START("matMat");
-  FILE* matmat = fopen("matMat_time.dat","a");
+  // FILE* matmat = fopen("matMat_time.dat","a");
   start = timestamp();
   multMatMat (mRow_1, mRow_2, n, resMat);
   end = timestamp();
-  fprintf(matmat,"%d %lf\n", n, end-start);
-  fclose(matmat);
+  printf("%lf ",end-start);
+  // fclose(matmat);
   LIKWID_MARKER_STOP("matMat");
   
   /* =============== MAT MAT OTIMIZADO =============== */
   LIKWID_MARKER_START("matMatOpt");
-  FILE* matmatopt = fopen("matMatOpt_time.dat","a");
+  // FILE* matmatopt = fopen("matMatOpt_time.dat","a");
   start = timestamp();
   multMatMat_opt (mRow_1, mRow_2, n, resMat);
   end = timestamp();
-  fprintf(matmatopt,"%d %lf\n", n, end-start);
-  fclose(matmatopt);
+  printf("%lf", end-start);
+  // fclose(matmatopt);
   LIKWID_MARKER_STOP("matMatOpt");
 
 #ifdef _DEBUG_
