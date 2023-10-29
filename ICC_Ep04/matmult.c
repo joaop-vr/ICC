@@ -52,8 +52,6 @@ int main (int argc, char *argv[])
  
   srandom(20232);
   
-	//mRow_1 = geraMatRow(n,n,1);
-	//mRow_2 = geraMatRow(n,n,1);
   if (ehPotenciaDe2(n)) {
     res = geraVetor (n, 0); // (real_t *) malloc (n*sizeof(real_t));
     resMat = geraMatRow(n, n+1, 1);
@@ -92,42 +90,34 @@ int main (int argc, char *argv[])
 
   /* =============== MAT VET PADRÃO =============== */
   LIKWID_MARKER_START("matVet");
-  // FILE* matvet = fopen("matVet_time.dat","a");
   start = timestamp();
   multMatVet (mRow_1, vet, n, n, res);
   end = timestamp();
   printf("%lf ", end-start);
-  // fclose(matvet);
   LIKWID_MARKER_STOP("matVet");
 
   /* =============== MAT VET OTIMIZADO =============== */
   LIKWID_MARKER_START("matVetOpt");
-  // FILE* matvetopt = fopen("matVetOpt_time.dat","a");
   start = timestamp();
   multMatVet_opt (mRow_1, vet, n, n, res);
   end = timestamp();
   printf("%lf ",end-start);
-  // fclose(matvetopt);
   LIKWID_MARKER_STOP("matVetOpt");
 
   /* =============== MAT MAT PADRÃO =============== */
   LIKWID_MARKER_START("matMat");
-  // FILE* matmat = fopen("matMat_time.dat","a");
   start = timestamp();
   multMatMat (mRow_1, mRow_2, n, resMat);
   end = timestamp();
   printf("%lf ",end-start);
-  // fclose(matmat);
   LIKWID_MARKER_STOP("matMat");
   
   /* =============== MAT MAT OTIMIZADO =============== */
   LIKWID_MARKER_START("matMatOpt");
-  // FILE* matmatopt = fopen("matMatOpt_time.dat","a");
   start = timestamp();
   multMatMat_opt (mRow_1, mRow_2, n, resMat);
   end = timestamp();
   printf("%lf", end-start);
-  // fclose(matmatopt);
   LIKWID_MARKER_STOP("matMatOpt");
 
 #ifdef _DEBUG_
