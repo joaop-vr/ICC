@@ -10,12 +10,17 @@
  * double x = 
  * 
 *******************************************/
-double styblinskiTang (double x) {
+double styblinskiTang (int n, double a, double b) {
 
-    double output, x2;
-
-    x2 = x*x;
-    output = ((x2*x2) - (16*x2) + (5*x))/2;
+    double output = 0, x2;
+    double x;
+    double *xlist = malloc(sizeof(double)*n);
+    for (int i = 0; i < n; i++){
+        x = xlist[i];
+        x2 = x*x;
+        output = ((x2*x2) - (16*x2) + (5*x));
+    }
+    output /= 2;
 
     return output;
 }
