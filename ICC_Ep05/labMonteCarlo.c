@@ -38,14 +38,14 @@ double integral_monte_carlo(double a, double b, int namostras, int d)
   int count = 0;
 
   for (int i = 0; i < namostras; i++) {
-      double point[10];
-      for (int j = 0; j < d; j++) {
-          point[j] = ((double)rand() / RAND_MAX) * (b - a) + a;
-      }
+    double point[10];
+    for (int j = 0; j < d; j++) {
+      point[j] = ((double)random() / RAND_MAX) * (b - a) + a;
+    }
 
-      if (styblinski_tang(point, d) <= 0) {
-          count++;
-      }
+    if (styblinski_tang(point, d) <= 0) {
+      count++;
+    }
   }
 
   double volume = pow(b - a, d);
@@ -60,12 +60,11 @@ double integral_monte_carlo(double a, double b, int namostras, int d)
 
 double retangulos_xy(double a, double b, int npontos) {
 
-  double h;
   double resultado;
   double soma = 0;
-  
+
   printf("Metodo dos Retangulos (x, y).\n");
-  printf("a = (%f), b = (%f), n = (%d), h = (%lg)\n", a, b, npontos, h);
+  printf("a = (%f), b = (%f), n = (%d)\n", a, b, npontos);
   
   double t_inicial = timestamp();
   
@@ -76,6 +75,21 @@ double retangulos_xy(double a, double b, int npontos) {
     
   */
   
+  // deltaXi = espaçamento entre os pontos ao longo do eixo X
+  double deltaXi;
+  double point[2];
+  deltaXi = (b-a)/npontos;
+  soma = 0.0;
+  for (int i = 0; i < npontos; i++){
+    for (int j = 0; j < npontos; j++){
+      point[0] = a + i * deltaXi;
+      point[1] = a + i * deltaXi;
+      soma += styblinski_tang(point, 2);
+    }
+
+  }
+  resultado = soma*deltaXi;
+
   double t_final = timestamp();
   printf("Tempo decorrido: %f seg.\n", t_final - t_inicial);
   
@@ -89,13 +103,19 @@ int main(int argc, char **argv) {
     printf("Utilização: %s inicial final n_amostras n_variaveis\n", argv[0]);
     return 1;
   }
+  double a = atoi(argv[1]);
+  double b = atoi(argv[2]);
+  int n_amostras = atoi(argv[3]);
+  int n_dimensoes = atoi(argv[4]);
 
   // INICIAR VALOR DA SEMENTE
   srandom(20232);
     
   // CHAMAR FUNÇÕES DE INTEGRAÇÃO E EXIBIR RESULTADOS
-  double area = integral_monte_carlo(atoi(argv[1]), atoi(argv[2]),atoi(argv[3]),atoi(argv[4]));
-  printf("área = %lf\n", area);
+  double area = integral_monte_carlo(a, b,n_amostras,n_dimensoes);
+  printf("área utilizando monte carlo = %lf\n", area);
+  area = retangulos_xy(a,b,n_amostras);
+  printf("área utilizando retangulos = %lf\n", area);
   return 0;
 }
 
