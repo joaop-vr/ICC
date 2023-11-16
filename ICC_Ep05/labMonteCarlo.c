@@ -65,27 +65,21 @@ double retangulos_xy(double a, double b, int npontos) {
   
   double t_inicial = timestamp();
   
-  /*
-    
-    AQUI IMPLEMENTE O CÁLCULO DA INTEGRAL PELO
-    MÉTODO DOS RETÂNGULOS
-    
-  */
-  
   // deltaXi = espaçamento entre os pontos ao longo do eixo X
   double deltaXi;
   double point[2];
+
   deltaXi = (b-a)/npontos;
   soma = 0.0;
-  for (int i = 0; i < npontos; i++){
-    for (int j = 0; j < npontos; j++){
-      point[0] = a + i * deltaXi;
+  for (int i = 0; i < npontos; i++) {
+    point[0] = a + i * deltaXi;
+    for (int j = 0; j < npontos; j++) {
       point[1] = a + j * deltaXi;
       soma += styblinski_tang(point, 2);
     }
-
   }
-  resultado = soma*deltaXi;
+
+  resultado = soma*deltaXi*deltaXi;
 
   double t_final = timestamp();
   printf("Tempo decorrido: %f seg.\n", t_final - t_inicial);
