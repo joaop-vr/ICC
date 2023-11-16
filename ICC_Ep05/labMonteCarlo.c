@@ -10,37 +10,34 @@
 #define SRAND(a) srand(a) // srand48(a)
 
 double styblinski_tang(double x[10], int n) {
+
+    double xi2;
     double sum = 0.0;
+
     for (int i = 0; i < n; i++) {
-        sum += 0.5 * (pow(x[i], 4) - 16 * pow(x[i], 2) + 5 * x[i]);
+        xi2 = x[i] * x[i];
+        sum += (xi2 * xi2 - 16 * xi2 + 5 * x[i]);
     }
-    return sum;
+
+    return sum * 0.5;
 }
 
 // Integral Monte Carlo da função Styblinski-Tang de 2 variáveis
 double integral_monte_carlo(double a, double b, int namostras, int d)
 {
-  double soma = 0.0;
   
   printf("Metodo de Monte Carlo (x, y).\n");
   printf("a = (%f), b = (%f), n = (%d), variaveis = %d\n", a, b, namostras, d);
   
   double t_inicial = timestamp();
   
-
-  /*
-    
-    AQUI IMPLEMENTE O CÁLCULO DA INTEGRAL  PELO
-    MÉTODO DE MONTE CARLO
-    
-  */
-  
   int count = 0;
+  double interval = (b -a);
 
   for (int i = 0; i < namostras; i++) {
     double point[10];
     for (int j = 0; j < d; j++) {
-      point[j] = ((double)random() / RAND_MAX) * (b - a) + a;
+      point[j] = ((double)random() / RAND_MAX) * (interval) + a;
     }
 
     if (styblinski_tang(point, d) <= 0) {
@@ -48,7 +45,7 @@ double integral_monte_carlo(double a, double b, int namostras, int d)
     }
   }
 
-  double volume = pow(b - a, d);
+  double volume = pow(interval, d);
   double resultado = ((double)count / namostras) * volume;
 
   double t_final = timestamp();
@@ -83,7 +80,7 @@ double retangulos_xy(double a, double b, int npontos) {
   for (int i = 0; i < npontos; i++){
     for (int j = 0; j < npontos; j++){
       point[0] = a + i * deltaXi;
-      point[1] = a + i * deltaXi;
+      point[1] = a + j * deltaXi;
       soma += styblinski_tang(point, 2);
     }
 
@@ -118,4 +115,3 @@ int main(int argc, char **argv) {
   printf("área utilizando retangulos = %lf\n", area);
   return 0;
 }
-
