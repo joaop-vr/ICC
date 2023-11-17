@@ -16,7 +16,7 @@ double styblinski_tang(double x[10], int n) {
 
     for (int i = 0; i < n; i++) {
         xi2 = x[i] * x[i];
-        sum += (xi2 * xi2 - 16 * xi2 + 5 * x[i]);
+        sum += ((xi2 * xi2) - (16 * xi2) + (5 * x[i]));
     }
 
     return sum * 0.5;
@@ -37,7 +37,7 @@ double integral_monte_carlo(double a, double b, int namostras, int d)
   for (int i = 0; i < namostras; i++) {
     double point[10];
     for (int j = 0; j < d; j++) {
-      point[j] = ((double)random() / RAND_MAX) * (interval) + a;
+      point[j] = ((double)rand() / RAND_MAX) * (interval) + a;
     }
 
     if (styblinski_tang(point, d) <= 0) {
@@ -49,7 +49,7 @@ double integral_monte_carlo(double a, double b, int namostras, int d)
   double resultado = ((double)count / namostras) * volume;
 
   double t_final = timestamp();
-  printf("Tempo decorrido: %f seg.\n", t_final - t_inicial);
+  printf("Tempo decorrido: %f ms\n", t_final - t_inicial);
   
   return resultado;
 }
@@ -57,8 +57,7 @@ double integral_monte_carlo(double a, double b, int namostras, int d)
 
 double retangulos_xy(double a, double b, int npontos) {
 
-  double resultado;
-  double soma = 0;
+  double resultado;double soma = 0;
 
   printf("Metodo dos Retangulos (x, y).\n");
   printf("a = (%f), b = (%f), n = (%d)\n", a, b, npontos);
@@ -66,27 +65,28 @@ double retangulos_xy(double a, double b, int npontos) {
   double t_inicial = timestamp();
   
   // deltaXi = espaçamento entre os pontos ao longo do eixo X
-  double deltaXi;
-  double point[2];
+  double deltaXi; double x; double xi2, yj2;
 
   deltaXi = (b-a)/npontos;
   soma = 0.0;
+
   for (int i = 0; i < npontos; i++) {
-    point[0] = a + i * deltaXi;
+
+    x = a + i * deltaXi;
+    xi2 = x * x;
+
     for (int j = 0; j < npontos; j++) {
-      point[1] = a + j * deltaXi;
-      soma += styblinski_tang(point, 2);
+        soma += (xi2 * xi2 - 16 * xi2 + 5 * x);
     }
   }
 
-  resultado = soma*deltaXi*deltaXi;
+  resultado = soma * deltaXi * deltaXi;
 
   double t_final = timestamp();
   printf("Tempo decorrido: %f seg.\n", t_final - t_inicial);
   
   return resultado;
 }
-
 
 int main(int argc, char **argv) {
 

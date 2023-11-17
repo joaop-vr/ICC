@@ -1,44 +1,39 @@
-for function in matVet matMat
+echo "performance" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor
+
+# likwid-perfctr -C ${CPU} -g ${k} -m ./teste >${k}_SemOtimiz.log
+
+make purge
+make
+
+> time.dat
+> mem.dat
+> cache.dat
+> energy.dat
+> flops.dat
+./gera_entrada > teste.in
+for n in 64 100 128 200 256 512 600 900 1024 2000 2048 3000 4000 
 do
-    > ${function}_time.dat
-    for n in 64 100 128 200 256 512 600 900 1024 2000 2048 3000 4000 
-    do
-        echo "$n " >> ${function}_time.dat
-	echo "rodando matriz $n para funcao $function"
-        ./matmult $n
-        echo $"\n" >> ${function}_time.dat
-    done
+    echo -n "$n " >> time.dat
+    echo "Executando $n e pegando tempo..."
+    # echo "rodando matriz $n para funcao $function"
+    ./matmult $n >> time.dat
+    echo >> time.dat
 
-    > ${function}_mem.dat
-    for n in 64 100 128 200 256 512 600 900 1024 2000 2048 3000 4000 
-    do
-        echo "$n " >> ${function}_mem.dat
-        likwid-perfctr -C 3 -g MEM ./matmult $n # nao funciona (???)
-        echo $"\n" >> ${function}_mem.dat
-    done
+    echo -n "$n " >> mem.dat
+    echo "Executando $n e pegando memoria..."
+    likwid-perfctr -O -C 3 -g L3 -m ./matmult $n | grep "L3 bandwidth" | cut -d',' -f2 | tr "\n" " " >> mem.dat 
+    echo >> mem.dat
 
-    > ${function}_cache.dat
-    for n in 64 100 128 200 256 512 600 900 1024 2000 2048 3000 4000 
-    do
-        echo "$n " >> ${function}_cache.dat
-        likwid-perfctr -C 3 -g CACHE ./matmult $n | grep "miss ratio" | cut -d' ' -f9 | tr "\n" " " >> ${function}_cache.dat
-        echo $"\n" >> ${function}_cache.dat
-    done
+    echo -n "$n " >> cache.dat
+    echo "Executando $n e pegando cache..."
+    likwid-perfctr -O -C 3 -g L2CACHE -m ./matmult $n | grep "miss ratio" | cut -d',' -f2 | tr "\n" " " >> cache.dat
+    echo >> cache.dat
 
-    > ${function}_energy.dat
-    for n in 64 100 128 200 256 512 600 900 1024 2000 2048 3000 4000 
-    do
-        echo "$n " >> ${function}_energy.dat
-        likwid-perfctr -C 3 -g ENERGY ./matmult $n | grep "Energy Core" | cut -d' ' -f16 | tr "\n" " " >> ${function}_energy.dat
-        echo $"\n" >> ${function}_energy.dat
-    done
-
-    > ${function}_flops.dat
-    for n in 64 100 128 200 256 512 600 900 1024 2000 2048 3000 4000 
-    do
-        echo "$n " >> ${function}_flops.dat
-        likwid-perfctr -C 3 -g ENERGY ./matmult $n
-        echo $"\n" >> ${function}_flops.dat
-    done
-    # echo "powersave" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor
+    echo -n "$n " >> flops.dat
+    echo "Executando $n e pegando flops..."
+    likwid-perfctr -O -C 3 -g FLOPS_DP -m ./matmult $n | grep "DP " | cut -d',' -f2 | tr "\n" " " >> flops.dat
+    echo >> flops.dat
 done
+
+./gera_graficos.gp
+echo "powersave" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor
