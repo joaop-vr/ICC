@@ -25,7 +25,7 @@ struct ajustePol* montarEstrutura() {
     }
 
     // Lê a quantidade de pontos
-    if (scanf("%d", &qntdPontos) != 1) {
+    if (scanf("%ld", &qntdPontos) != 1) {
         fprintf(stderr, "Erro na leitura de quantidade de pontos.\n");
         exit(1);
     }

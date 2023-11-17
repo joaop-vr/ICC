@@ -23,6 +23,9 @@ auxiliares.o: auxiliares.h auxiliares.c
 minimosQuadrados.o: minimosQuadrados.h minimosQuadrados.c
 	gcc -c minimosQuadrados.c $(parametrosCompilacao)
 
+gera_entrada: gera_entrada.c
+	gcc gera_entrada.c -o gera_entrada
+
 clean:
 	-rm -f $(objs) *~ $(nomePrograma)
 
