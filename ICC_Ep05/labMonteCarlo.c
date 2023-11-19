@@ -75,9 +75,8 @@ double retangulos_xy(double a, double b, int npontos) {
     x = a + i * deltaXi;
     xi2 = x * x;
 
-    for (int j = 0; j < npontos; j++) {
-        soma += (xi2 * xi2 - 16 * xi2 + 5 * x);
-    }
+    
+    soma += (xi2 * xi2 - 16 * xi2 + 5 * x) * npontos;
   }
 
   resultado = soma * deltaXi * deltaXi;
