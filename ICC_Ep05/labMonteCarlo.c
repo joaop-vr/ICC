@@ -48,47 +48,6 @@ double integral_monte_carlo (double a, double b, long int n_amostras, int n_dime
   return (count / n_amostras) * volume;
 }
 
-/*
-double styblinski_tang(double points[], int dimensoes) {
-
-    double x, x2;
-    double sum = 0.0;
-    
-    for (int i = 0; i < dimensoes; i++) {
-      x = points[i];
-      x2 = x * x;
-      sum += ((x2 * x2) - 16*x2 + 5 * x);
-    }
-    return sum / 2;
-}
-
-double integral_monte_carlo (double a, double b, int n_amostras, int n_dimensoes) {
-
-  double point[n_dimensoes];
-  double interval = b-a;
-  double volume = pow(interval, n_dimensoes);
-  double count = 0;
-
-  printf("Metodo de Monte Carlo (x, y).\n");
-  printf("a = (%f), b = (%f), n = (%d), variaveis = %d\n", a, b, n_amostras, n_dimensoes);
-  
-  double t_inicial = timestamp();
-
-  for (int i = 0; i < n_amostras; i++) {
-    for (int j = 0; j < n_dimensoes; j++) {
-      double x = NRAND * interval + a;
-      double x2 = x * x;
-      count += ((x2 * x2) - 16*x2 + 5 * x);
-    }
-  }
-  count /= 2;
-  
-  double t_final = timestamp();
-  printf("Tempo decorrido: %f ms\n", t_final - t_inicial);
-
-  return (count / n_amostras) * volume;
-} */
-
 double retangulos_xy(double a, double b, int npontos) {
 
   double resultado;double soma = 0;
