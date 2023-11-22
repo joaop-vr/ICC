@@ -43,7 +43,7 @@ double integral_monte_carlo (double a, double b, long int n_amostras, int n_dime
   }
   
   double t_final = timestamp();
-  printf("Tempo decorrido: %f ms\n", t_final - t_inicial);
+  printf("Tempo decorrido: %f seg.\n", t_final - t_inicial);
 
   return (count / n_amostras) * volume;
 }
@@ -91,9 +91,13 @@ int main(int argc, char **argv) {
   srandom(20232);
     
   // CHAMAR FUNÇÕES DE INTEGRAÇÃO E EXIBIR RESULTADOS
-  double area = integral_monte_carlo(a, b,n_amostras,n_dimensoes);
-  printf("área utilizando monte carlo = %lf\n", area);
-  area = retangulos_xy(a,b,10000000);
+  double area = retangulos_xy(a,b,n_amostras);
   printf("área utilizando retangulos = %lf\n", area);
+  area = integral_monte_carlo(a, b,n_amostras,2);
+  printf("área = %lf\n", area);
+  area = integral_monte_carlo(a, b,n_amostras,4);
+  printf("área = %lf\n", area);
+  area = integral_monte_carlo(a, b,n_amostras,8);
+  printf("área = %lf\n", area);
   return 0;
 }
