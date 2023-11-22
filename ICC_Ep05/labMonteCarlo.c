@@ -9,51 +9,43 @@
 #define NRAND    ((double) rand() / RAND_MAX)  // drand48() 
 #define SRAND(a) srand(a) // srand48(a)
 
-double styblinski_tang(double x[10], int n) {
+double styblinski_tang(double points[], int dimensoes) {
 
-    double xi2;
+    double x, x2;
     double sum = 0.0;
-
-    for (int i = 0; i < n; i++) {
-        xi2 = x[i] * x[i];
-        sum += ((xi2 * xi2) - (16 * xi2) + (5 * x[i]));
+    
+    for (int i = 0; i < dimensoes; i++) {
+      x = points[i];
+      x2 = x * x;
+      sum += ((x2 * x2) - 16*x2 + 5 * x);
     }
-
-    return sum * 0.5;
+    return sum / 2;
 }
 
-// Integral Monte Carlo da função Styblinski-Tang de 2 variáveis
-double integral_monte_carlo(double a, double b, int namostras, int d)
-{
-  
+double integral_monte_carlo (double a, double b, int n_amostras, int n_dimensoes) {
+
+  double point[n_dimensoes];
+  double interval = b-a;
+  double volume = pow(interval, n_dimensoes);
+  int count = 0;
+
   printf("Metodo de Monte Carlo (x, y).\n");
-  printf("a = (%f), b = (%f), n = (%d), variaveis = %d\n", a, b, namostras, d);
+  printf("a = (%f), b = (%f), n = (%d), variaveis = %d\n", a, b, n_amostras, n_dimensoes);
   
   double t_inicial = timestamp();
-  
-  int count = 0;
-  double interval = (b -a);
 
-  for (int i = 0; i < namostras; i++) {
-    double point[10];
-    for (int j = 0; j < d; j++) {
-      point[j] = ((double)rand() / RAND_MAX) * (interval) + a;
+  for (int i = 0; i < n_amostras; i++) {
+    for (int j = 0; j < n_dimensoes; j++) {
+      point[j] = NRAND * interval + a;
     }
-
-    if (styblinski_tang(point, d) <= 0) {
-      count++;
-    }
+    count += styblinski_tang(point, n_dimensoes);
   }
-
-  double volume = pow(interval, d);
-  double resultado = ((double)count / namostras) * volume;
-
+  
   double t_final = timestamp();
   printf("Tempo decorrido: %f ms\n", t_final - t_inicial);
-  
-  return resultado;
-}
 
+  return ((double)count / n_amostras) * volume;
+}
 
 double retangulos_xy(double a, double b, int npontos) {
 
@@ -71,14 +63,10 @@ double retangulos_xy(double a, double b, int npontos) {
   soma = 0.0;
 
   for (int i = 0; i < npontos; i++) {
-
     x = a + i * deltaXi;
     xi2 = x * x;
-
-    
     soma += (xi2 * xi2 - 16 * xi2 + 5 * x) * npontos;
   }
-
   resultado = soma * deltaXi * deltaXi;
 
   double t_final = timestamp();
