@@ -31,7 +31,7 @@ double integral_monte_carlo (double a, double b, long int n_amostras, int n_dime
   double count = 0;
 
   printf("Metodo de Monte Carlo (x, y).\n");
-  printf("a = (%f), b = (%f), n = (%d), variaveis = %d\n", a, b, n_amostras, n_dimensoes);
+  printf("a = (%f), b = (%f), n = (%ld), variaveis = %d\n", a, b, n_amostras, n_dimensoes);
   
   double t_inicial = timestamp();
 
@@ -43,7 +43,7 @@ double integral_monte_carlo (double a, double b, long int n_amostras, int n_dime
   }
   
   double t_final = timestamp();
-  printf("Tempo decorrido: %f seg.\n", t_final - t_inicial);
+  printf("Tempo decorrido: %f ms\n", t_final - t_inicial);
 
   return (count / n_amostras) * volume;
 }
@@ -58,7 +58,7 @@ double retangulos_xy(double a, double b, int npontos) {
   double t_inicial = timestamp();
   
   // deltaXi = espaçamento entre os pontos ao longo do eixo X
-  double deltaXi; double x; double xi2, yj2;
+  double deltaXi; double x; double xi2;
 
   deltaXi = (b-a)/npontos;
   soma = 0.0;
@@ -71,7 +71,7 @@ double retangulos_xy(double a, double b, int npontos) {
   resultado = soma * deltaXi * deltaXi;
 
   double t_final = timestamp();
-  printf("Tempo decorrido: %f seg.\n", t_final - t_inicial);
+  printf("Tempo decorrido: %f ms\n", t_final - t_inicial);
   
   return resultado;
 }
