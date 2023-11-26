@@ -30,7 +30,7 @@ int main() {
     start = timestamp();
     gauss(sistema);
     end = timestamp();
-    LIKWID_MARKER_START("gauss");
+    LIKWID_MARKER_STOP("gauss");
     tsolSL = end-start;
     
     // Imprime os coeficientes do polinômio

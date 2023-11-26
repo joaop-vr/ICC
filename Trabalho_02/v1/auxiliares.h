@@ -13,7 +13,7 @@
 
 // Parâmetros: número inteiro
 // Retorno: endereço do vetor alocado de tamanho N
-struct operandos* alocarVetor(int N);
+struct operandos* alocarVetor(long long int N);
 
 // Parâmetros: número inteiro
 // Retorno: endereço da matriz alocada de tamanho NxN

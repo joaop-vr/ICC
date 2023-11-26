@@ -16,7 +16,7 @@ set xtics
 set key outside right
 set xlabel  "N matriz"
 set logscale y
-unset logscale x
+set logscale x
 set datafile separator whitespace
 
 set ylabel "ms"
@@ -24,7 +24,7 @@ set output "time.png"
 set title  "Tempo de execucao"
 set terminal qt 1 title "Tempo de execucao"
 plot 'time_v1.dat' using 1:2 title "v1" with linespoints, \
-     'time_v2' using 1:2 title "v2" with linespoints
+     'time_v2.dat' using 1:2 title "v2" with linespoints
 
 pause -1
 
@@ -50,9 +50,7 @@ set ylabel "MFLOP/s"
 set output "FLOPS_DP.png"
 set title "FLOPS"
 set terminal qt 1 title "FLOPS"
-plot 'flops.dat' using 1:2 title "matVet FLOPS_DP" with linespoints, \
-     '' using 1:4 title "matVetOpt FLOPS_DP" with linespoints, \
-     '' using 1:6 title "matMat FLOPS_DP" with linespoints, \
-     '' using 1:8 title "matMatOpt FLOPS_DP" with linespoints, \
+plot 'flops_v1.dat' using 1:2 title "v1 FLOPS_DP" with linespoints, \
+     'flops_v2.dat' using 1:2 title "v2 FLOPS_DP" with linespoints
 
 pause -1
