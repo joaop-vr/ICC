@@ -39,7 +39,8 @@ struct ajustePol* montarEstrutura() {
     sistema->matriz = alocarMatriz(grau);
     sistema->resultados = alocarVetor(grau);
     sistema->coeficientes = alocarVetor(grau);
-    sistema->tabelaPontos = alocarVetor(2*qntdPontos);    
+    sistema->pontos_x = alocarVetor(qntdPontos);
+    sistema->pontos_y = alocarVetor(qntdPontos);
 
     preencherEstrutura(sistema);
 
@@ -67,14 +68,14 @@ void preencherEstrutura(struct ajustePol* sistema) {
         token = strtok(aux, " ");
         if (token != NULL) {
             valor = strtod(token, NULL);
-            sistema->tabelaPontos[i] = calcularIntervalo(valor);
+            sistema->pontos_x[i] = calcularIntervalo(valor);
         }
 
         // Obtém a coordenada no eixo Y e calcula o intervalo
         token = strtok(NULL, " ");
         if (token != NULL) {
             valor = strtod(token, NULL);
-            sistema->tabelaPontos[i] = calcularIntervalo(valor);
+            sistema->pontos_y[i] = calcularIntervalo(valor);
         }
     }    
 }
@@ -86,7 +87,7 @@ void imprimir(struct ajustePol* sistema) {
     printf("Quantidade de pontos: %d\n", sistema->qntdPontos);
 
     /*for (int i = 0; i < (sistema->qntdPontos) ; i++) {
-        printf("X%d: %1.8e [%1.8e|%1.8e]  Y%d: %1.8e [%1.8e|%1.8e]\n", i, sistema->tabelaPontos[2*i].num, sistema->tabelaPontos[2*i].anterior, sistema->tabelaPontos[2*i].posterior, i, sistema->tabelaPontos[2*i+1].num, sistema->tabelaPontos[2*i+1].anterior, sistema->tabelaPontos[2*i+1].posterior);
+        printf("X%d: %1.8e [%1.8e|%1.8e]  Y%d: %1.8e [%1.8e|%1.8e]\n", i, sistema->pontos_x[i].num, sistema->pontos_x[i].anterior, sistema->pontos_x[i].posterior, i, sistema->pontos_y[i].num, sistema->pontos_y[i].anterior, sistema->pontos_y[i].posterior);
     }*/
 
     for (int i = 0; i < sistema->grauPol; i++) {
@@ -106,5 +107,6 @@ void destruirEstrutura(struct ajustePol* sistema) {
     free(sistema->matriz);
     free(sistema->resultados);
     free(sistema->coeficientes);
-    free(sistema->tabelaPontos);
+    free(sistema->pontos_x);
+    free(sistema->pontos_y);
 }

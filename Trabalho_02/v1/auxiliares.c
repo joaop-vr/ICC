@@ -25,7 +25,7 @@ struct operandos* alocarVetor(long long int N) {
 }
 
 // Aloca uma matriz de structs operandos* de tamanho NxN e retorna um ponteiro para ela
-struct operandos** alocarMatriz(int N) {
+struct operandos** alocarMatriz(long long int N) {
 
     // Alocação dinâmica da matriz
     struct operandos** matriz = (struct operandos**)malloc(N * sizeof(struct operandos*));

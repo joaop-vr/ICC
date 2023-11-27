@@ -43,7 +43,7 @@ int main() {
     printf("\n");
 
     // Calcula e imprime os resíduos
-    //calculaResiduos(sistema);
+    calculaResiduos(sistema);
 
     LIKWID_MARKER_CLOSE;
 
