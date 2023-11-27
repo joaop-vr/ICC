@@ -23,6 +23,8 @@ int main() {
     sistema = minimosQuadrados(sistema); //Aplica o método dos mínimos quadrados para ajuste de curva
     end = timestamp();
 
+    imprimir(sistema);
+
     LIKWID_MARKER_STOP("minQuad");
     tgeraSL = end-start;
 
@@ -32,6 +34,8 @@ int main() {
     end = timestamp();
     LIKWID_MARKER_STOP("gauss");
     tsolSL = end-start;
+
+    imprimir(sistema);
     
     // Imprime os coeficientes do polinômio
     for (int i = 0; i < sistema->grauPol; i++)
@@ -39,7 +43,7 @@ int main() {
     printf("\n");
 
     // Calcula e imprime os resíduos
-    calculaResiduos(sistema);
+    //calculaResiduos(sistema);
 
     LIKWID_MARKER_CLOSE;
 

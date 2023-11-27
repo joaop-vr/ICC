@@ -6,6 +6,7 @@
 #include "estruturas.h"
 #include "calculoIntervalar.h"
 #include "minimosQuadrados.h"
+#include "operaEstrutura.h"
 
 // Aplica o método dos mínimos quadrados e posteriormente chama a função "gauss()"
 struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
@@ -17,28 +18,9 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
 
         // Aplica as operações aritméticas sobre os valores da matriz de coeficientes do sistema linear,
         // ou seja, sobre os valores de A do sistema linear AX=B
-        for (int j = 0; j < sistema->grauPol; j++) {
+        for (int j = i; j < sistema->grauPol; j++) {
             sistema->matriz[i][j] = calcularIntervalo(0.0);
-            for(long long int k = 0; k < sistema->qntdPontos - sistema->qntdPontos%4; k+=4) {
-                aux1 = calcularExpo(sistema->tabelaPontos[2*k], i);
-                aux2 = calcularExpo(sistema->tabelaPontos[2*k], j);
-                aux3 = calcularMultiplicacao(aux1,aux2);
-                sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
-                aux1 = calcularExpo(sistema->tabelaPontos[2*k+2], i);
-                aux2 = calcularExpo(sistema->tabelaPontos[2*k+2], j);
-                aux3 = calcularMultiplicacao(aux1,aux2);
-                sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
-                aux1 = calcularExpo(sistema->tabelaPontos[2*k+4], i);
-                aux2 = calcularExpo(sistema->tabelaPontos[2*k+4], j);
-                aux3 = calcularMultiplicacao(aux1,aux2);
-                sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
-                aux1 = calcularExpo(sistema->tabelaPontos[2*k+6], i);
-                aux2 = calcularExpo(sistema->tabelaPontos[2*k+6], j);
-                aux3 = calcularMultiplicacao(aux1,aux2);
-                sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
-
-            }
-            for (long long int k = sistema->qntdPontos - sistema->qntdPontos%4; k < sistema->qntdPontos; k++) {
+            for(int k = 0; k < sistema->qntdPontos; k++) {
                 aux1 = calcularExpo(sistema->tabelaPontos[2*k], i);
                 aux2 = calcularExpo(sistema->tabelaPontos[2*k], j);
                 aux3 = calcularMultiplicacao(aux1,aux2);
@@ -49,27 +31,24 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
         // Aplica as operações aritméticas sobre os resultados de cada linha da matriz, 
         // ou seja, sobre os valores de B do sistema linear AX=B
         sistema->resultados[i] = calcularIntervalo(0.0);
-        for (long long int k = 0; k < sistema->qntdPontos - sistema->qntdPontos%4; k+=4) {
+        for (int k = 0; k < sistema->qntdPontos; k++) {
             aux1 = calcularExpo(sistema->tabelaPontos[2*k], i);
             aux2 = calcularMultiplicacao(aux1,sistema->tabelaPontos[2*k+1]);
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
-            aux1 = calcularExpo(sistema->tabelaPontos[2*k+2], i);
-            aux2 = calcularMultiplicacao(aux1,sistema->tabelaPontos[2*k+3]);
-            sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
-            aux1 = calcularExpo(sistema->tabelaPontos[2*k+4], i);
-            aux2 = calcularMultiplicacao(aux1,sistema->tabelaPontos[2*k+5]);
-            sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
-            aux1 = calcularExpo(sistema->tabelaPontos[2*k+6], i);
-            aux2 = calcularMultiplicacao(aux1,sistema->tabelaPontos[2*k+7]);
-            sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
-        }
-        for (long long int k = sistema->qntdPontos - sistema->qntdPontos%4; k < sistema->qntdPontos; k++) {
-            aux1 = calcularExpo(sistema->tabelaPontos[2*k], i);
-            aux2 = calcularMultiplicacao(aux1,sistema->tabelaPontos[2*k+1]);
-            sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
-        }
-        
+       }
     }
+
+
+    // Transpondo a matriz
+    // para reutilizar os valores do triângulo superior
+    for (int i=0; i < sistema->grauPol; i++) {
+        for (int j=0; j<i; ++j){
+            sistema->matriz[i][j].anterior = sistema->matriz[j][i].anterior;
+            sistema->matriz[i][j].num = sistema->matriz[j][i].num;
+            sistema->matriz[i][j].posterior = sistema->matriz[j][i].posterior;
+        }
+    }
+
     return sistema;
 }
 

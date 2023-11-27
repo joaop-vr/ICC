@@ -17,7 +17,7 @@ struct ajustePol* montarEstrutura() {
 
     struct ajustePol* sistema = malloc(sizeof(struct ajustePol));
     int grau;
-    long long int qntdPontos;
+    int qntdPontos;
 
     // Lê o grau do polinomio
     if (scanf("%d", &grau) != 1) {
@@ -26,7 +26,7 @@ struct ajustePol* montarEstrutura() {
     }
 
     // Lê a quantidade de pontos
-    if (scanf("%ld", &qntdPontos) != 1) {
+    if (scanf("%d", &qntdPontos) != 1) {
         fprintf(stderr, "Erro na leitura de quantidade de pontos.\n");
         exit(1);
     }
@@ -51,7 +51,7 @@ void preencherEstrutura(struct ajustePol* sistema) {
 
     char aux[100], *token;
     double valor;
-    long long int N;
+    int N;
 
     N = 2*sistema->qntdPontos;
 
@@ -83,10 +83,17 @@ void preencherEstrutura(struct ajustePol* sistema) {
 void imprimir(struct ajustePol* sistema) {
 
     printf("Grau: %d\n", sistema->grauPol);
-    printf("Quantidade de pontos: %ld\n", sistema->qntdPontos);
+    printf("Quantidade de pontos: %d\n", sistema->qntdPontos);
 
-    for (long long int i = 0; i < (sistema->qntdPontos) ; i++) {
-        printf("X%ld: %1.8e [%1.8e|%1.8e]  Y%ld: %1.8e [%1.8e|%1.8e]\n", i, sistema->tabelaPontos[2*i].num, sistema->tabelaPontos[2*i].anterior, sistema->tabelaPontos[2*i].posterior, i, sistema->tabelaPontos[2*i+1].num, sistema->tabelaPontos[2*i+1].anterior, sistema->tabelaPontos[2*i+1].posterior);
+    /*for (int i = 0; i < (sistema->qntdPontos) ; i++) {
+        printf("X%d: %1.8e [%1.8e|%1.8e]  Y%d: %1.8e [%1.8e|%1.8e]\n", i, sistema->tabelaPontos[2*i].num, sistema->tabelaPontos[2*i].anterior, sistema->tabelaPontos[2*i].posterior, i, sistema->tabelaPontos[2*i+1].num, sistema->tabelaPontos[2*i+1].anterior, sistema->tabelaPontos[2*i+1].posterior);
+    }*/
+
+    for (int i = 0; i < sistema->grauPol; i++) {
+        for (int j = 0; j < sistema->grauPol; j++) {
+            printf("%2.4lf ", sistema->matriz[i][j].num);
+        }
+        printf(" = %2.4lf\n", sistema->resultados[i].num);
     }
 }
 
