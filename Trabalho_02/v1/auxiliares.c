@@ -96,7 +96,8 @@ double timestamp(void){
 // Calcula o resíduo de cada ponto e imprime o intervalo
 void calculaResiduos(struct ajustePol* sistema) {    
 
-    struct operandos residuos[sistema->qntdPontos], FXi, Yi;
+    struct operandos *residuos = malloc(sistema->qntdPontos*(sizeof(struct operandos)));
+    struct operandos FXi, Yi;
 
     // Percorre pela tabela de pontos calculando o resíduo de cada f(Xi)
     for (long long int i = 0; i < sistema->qntdPontos; i++) {
