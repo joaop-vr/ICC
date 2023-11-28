@@ -66,12 +66,12 @@ struct operandos calcularMultiplicacao(struct operandos x, struct operandos y) {
     struct operandos resultado;
     double aux[4];   
 
-    if ((fabs(x.num) < DBL_EPSILON) || (fabs(y.num) < DBL_EPSILON)) {
-        resultado.num = 0.0;
-        resultado.anterior = 0.0;
-        resultado.posterior = 0.0;
-    }
-    else {
+    //if ((fabs(x.num) < DBL_EPSILON) || (fabs(y.num) < DBL_EPSILON)) {
+    //    resultado.num = 0.0;
+    //    resultado.anterior = 0.0;
+    //    resultado.posterior = 0.0;
+    //}
+    //else {
 
         resultado.num = x.num * y.num;      
 
@@ -94,7 +94,7 @@ struct operandos calcularMultiplicacao(struct operandos x, struct operandos y) {
         resultado.posterior = max(aux);
         
         resultado.anterior = min(aux);
-    }
+    //}
 
     return resultado;
 }
