@@ -65,36 +65,51 @@ struct operandos calcularMultiplicacao(struct operandos x, struct operandos y) {
 
     struct operandos resultado;
     double aux[4];   
+    double menor, dif, maior;
 
-    //if ((fabs(x.num) < DBL_EPSILON) || (fabs(y.num) < DBL_EPSILON)) {
-    //    resultado.num = 0.0;
-    //    resultado.anterior = 0.0;
-    //    resultado.posterior = 0.0;
-    //}
-    //else {
+    resultado.num = x.num * y.num;      
 
-        resultado.num = x.num * y.num;      
+    // Realizando multiplicações para o limite inferior
+    fesetround(FE_DOWNWARD);
+    aux[0] = x.anterior * y.anterior;
+    aux[1] = x.anterior * y.posterior;
+    aux[2] = x.posterior * y.anterior;
+    aux[3] = x.posterior * y.posterior;
+    
+    // Inicializa 'menor' com o valor do primeiro elemento
+    menor = aux[0]; 
+    for (int i = 1; i < 4; i++) {
+        dif = fabs(aux[i] - menor);
 
-        // Realizando multiplicações para o limite inferior
-        fesetround(FE_DOWNWARD);
-        aux[0] = x.anterior * y.anterior;
-        aux[1] = x.anterior * y.posterior;
-        aux[2] = x.posterior * y.anterior;
-        aux[3] = x.posterior * y.posterior;
-        
-        resultado.anterior = min(aux);
+        // Verificando se o valor do vetor é o menor
+        // levando em consideração a margem de erro (DBL_EPSILON)
+        if ((aux[i] < menor) && (dif > DBL_EPSILON)) {
+            menor = aux[i];
+        }
+    }
 
-        // Realizando multiplicações para o limite superior
-        fesetround(FE_UPWARD);
-        aux[0] = x.anterior * y.anterior;
-        aux[1] = x.anterior * y.posterior;
-        aux[2] = x.posterior * y.anterior;
-        aux[3] = x.posterior * y.posterior;
+    resultado.anterior = menor;
 
-        resultado.posterior = max(aux);
-        
-        resultado.anterior = min(aux);
-    //}
+    // Realizando multiplicações para o limite superior
+    fesetround(FE_UPWARD);
+    aux[0] = x.anterior * y.anterior;
+    aux[1] = x.anterior * y.posterior;
+    aux[2] = x.posterior * y.anterior;
+    aux[3] = x.posterior * y.posterior;
+
+    // Inicializa 'maior' com o valor do primeiro elemento
+    maior = aux[0]; 
+    for (int i = 1; i < 4; i++) {
+        dif = fabs(aux[i] - maior);
+
+        // Verificando se o valor do vetor é o maior
+        // levando em consideração a margem de erro (DBL_EPSILON)
+        if ((aux[i] > maior) && (dif > DBL_EPSILON)) {
+            maior = aux[i];
+        }
+    }
+
+    resultado.posterior = maior;
 
     return resultado;
 }
@@ -103,7 +118,8 @@ struct operandos calcularMultiplicacao(struct operandos x, struct operandos y) {
 // Retorno: struct operandos com o resultado da divisão de X por Y e seus intervalos
 struct operandos calcularDivisao(struct operandos x, struct operandos y) {
 
-    struct operandos resultado;
+    struct operandos resultado; //struct que armazena o resultado da divisão
+    double maior,menor,dif; //variaveis para verificar o maior e o menor valor
     Float_t a;
     Float_t b;
     a.f = y.anterior;
@@ -130,7 +146,19 @@ struct operandos calcularDivisao(struct operandos x, struct operandos y) {
         aux[2] = x.posterior * (dPosterior);
         aux[3] = x.posterior * (dAnterior);
 
-        resultado.anterior = min(aux);
+        // Inicializa 'menor' com o valor do primeiro elemento
+        menor = aux[0]; 
+        for (int i = 1; i < 4; i++) {
+            dif = fabs(aux[i] - menor);
+
+            // Verificando se o valor do vetor é o menor
+            // levando em consideração a margem de erro (DBL_EPSILON)
+            if ((aux[i] < menor) && (dif > DBL_EPSILON)) {
+                menor = aux[i];
+            }
+        }
+
+        resultado.anterior = menor;
 
         // Realizando operações para o limite superior
         fesetround(FE_UPWARD);
@@ -140,7 +168,19 @@ struct operandos calcularDivisao(struct operandos x, struct operandos y) {
         aux[2] = x.posterior * (dPosterior);
         aux[3] = x.posterior * (dAnterior);
 
-        resultado.posterior = max(aux);
+        // Inicializa 'maior' com o valor do primeiro elemento
+        maior = aux[0]; 
+        for (int i = 1; i < 4; i++) {
+            dif = fabs(aux[i] - maior);
+
+            // Verificando se o valor do vetor é o maior
+            // levando em consideração a margem de erro (DBL_EPSILON)
+            if ((aux[i] > maior) && (dif > DBL_EPSILON)) {
+                maior = aux[i];
+            }
+        }
+
+        resultado.posterior = maior;
     }
 
     return resultado;

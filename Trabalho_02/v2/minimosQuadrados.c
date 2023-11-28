@@ -16,26 +16,66 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
 
     for (int i = 0; i < sistema->grauPol; i++) {
 
-        // Aplica as operações aritméticas sobre os valores da matriz de coeficientes do sistema linear,
-        // ou seja, sobre os valores de A do sistema linear AX=B
+        // Aplica as operações aritméticas apenas sobre os valores 
+        // no triangulo superior da matriz de coeficientes, pois ela é espelhada 
+        // no eixo da diagonal principal. Logo, podemos reutiliza-los e 
+        // transpô-los para a região do triangulo inferior
         for (int j = i; j < sistema->grauPol; j++) {
             sistema->matriz[i][j] = calcularIntervalo(0.0);
-            for(int k = 0; k < sistema->qntdPontos; k++) {
+
+            // Unroll+Jam na quantidade de pontos
+            for(int k = 0; k < sistema->qntdPontos-sistema->qntdPontos%4; k+=4) {
                 aux1 = calcularExpo(sistema->pontos_x[k], i);
                 aux2 = calcularExpo(sistema->pontos_x[k], j);
                 aux3 = calcularMultiplicacao(aux1,aux2);
                 sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
+                aux1 = calcularExpo(sistema->pontos_x[k+1], i);
+                aux2 = calcularExpo(sistema->pontos_x[k+1], j);
+                aux3 = calcularMultiplicacao(aux1,aux2);
+                sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
+                aux1 = calcularExpo(sistema->pontos_x[k+2], i);
+                aux2 = calcularExpo(sistema->pontos_x[k+2], j);
+                aux3 = calcularMultiplicacao(aux1,aux2);
+                sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
+                aux1 = calcularExpo(sistema->pontos_x[k+3], i);
+                aux2 = calcularExpo(sistema->pontos_x[k+3], j);
+                aux3 = calcularMultiplicacao(aux1,aux2);
+                sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
+            }
+
+            // Resíduo do Unroll+Jam
+            for (int k = sistema->qntdPontos-sistema->qntdPontos%4; k < sistema->qntdPontos; k++){
+                aux1 = calcularExpo(sistema->pontos_x[k], i);
+                aux2 = calcularExpo(sistema->pontos_x[k], j);
+                aux3 = calcularMultiplicacao(aux1,aux2);
             }
         }
 
         // Aplica as operações aritméticas sobre os resultados de cada linha da matriz, 
         // ou seja, sobre os valores de B do sistema linear AX=B
         sistema->resultados[i] = calcularIntervalo(0.0);
-        for (int k = 0; k < sistema->qntdPontos; k++) {
+        // Unroll+Jam na quantidade de pontos
+        for (int k = 0; k < sistema->qntdPontos-sistema->qntdPontos%4; k+=4) {
             aux1 = calcularExpo(sistema->pontos_x[k], i);
             aux2 = calcularMultiplicacao(aux1,sistema->pontos_y[k]);
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
-       }
+            aux1 = calcularExpo(sistema->pontos_x[k+1], i);
+            aux2 = calcularMultiplicacao(aux1,sistema->pontos_y[k+1]);
+            sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
+            aux1 = calcularExpo(sistema->pontos_x[k+2], i);
+            aux2 = calcularMultiplicacao(aux1,sistema->pontos_y[k+2]);
+            sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
+            aux1 = calcularExpo(sistema->pontos_x[k+3], i);
+            aux2 = calcularMultiplicacao(aux1,sistema->pontos_y[k+3]);
+            sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
+        }
+        
+        // Resíduo do Unroll+Jam
+        for (int k = sistema->qntdPontos-sistema->qntdPontos%4; k < sistema->qntdPontos; k++){
+            aux1 = calcularExpo(sistema->pontos_x[k], i);
+            aux2 = calcularMultiplicacao(aux1,sistema->pontos_y[k]);
+            sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
+        }
     }
 
 

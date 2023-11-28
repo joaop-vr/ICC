@@ -35,8 +35,10 @@ struct operandos** alocarMatriz(int N) {
         exit(1);
     }
 
-    for (int i = 0; i < N; i++) {
-        matriz[i] = (struct operandos*)malloc(N * sizeof(struct operandos));
+    matriz[0] = malloc(N * N * sizeof(struct operandos));
+
+    for (int i = 1; i < N; i++) {
+        matriz[i] = matriz[0] + i * N;
         if (!(matriz[i])) {
             fprintf(stderr, "Erro falha ao alocar vetor.\n");
             exit(1);

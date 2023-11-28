@@ -101,9 +101,10 @@ void imprimir(struct ajustePol* sistema) {
 // Desaloca toda a struct ajustePol
 void destruirEstrutura(struct ajustePol* sistema) {
 
-    for (int i = 0; i < sistema->grauPol; i++) {
-        free(sistema->matriz[i]);
-    }
+    // for (int i = 0; i < sistema->grauPol; i++) {
+    //     free(sistema->matriz[i]);
+    // }
+    free(sistema->matriz[0]);
     free(sistema->matriz);
     free(sistema->resultados);
     free(sistema->coeficientes);
