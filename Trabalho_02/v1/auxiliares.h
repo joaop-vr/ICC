@@ -17,7 +17,7 @@ struct operandos* alocarVetor(long long int N);
 
 // Parâmetros: número inteiro
 // Retorno: endereço da matriz alocada de tamanho NxN
-struct operandos** alocarMatriz(int N);
+struct operandos** alocarMatriz(long long int N);
 
 // Parâmetro: vetor de double [4]
 // Retorno: maior número do vetor (double)

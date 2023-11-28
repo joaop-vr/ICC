@@ -50,16 +50,16 @@ struct ajustePol* montarEstrutura() {
 // Preenche a struct ajustePol com os pontos da tabela
 void preencherEstrutura(struct ajustePol* sistema) {
 
-    char aux[100], *token;
+    char aux[200], *token;
     double valor;
     int N;
 
-    N = 2*sistema->qntdPontos;
+    N = sistema->qntdPontos;
 
     for (int i = 0; i < N ; i++) {
 
         // Obtém a linha com o ponto (x,y)
-        if (scanf("%s", aux) != 1) {
+        if (!fgets(aux,sizeof(aux),stdin)) {
             fprintf(stderr, "Erro na leitura de entrada dos pontos.\n");
             exit(1);
         }   
