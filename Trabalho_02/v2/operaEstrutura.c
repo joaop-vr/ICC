@@ -86,16 +86,16 @@ void imprimir(struct ajustePol* sistema) {
     printf("Grau: %d\n", sistema->grauPol);
     printf("Quantidade de pontos: %d\n", sistema->qntdPontos);
 
-    for (int i = 0; i < (sistema->qntdPontos) ; i++) {
-        printf("X%d: %1.8e [%1.8e|%1.8e]  Y%d: %1.8e [%1.8e|%1.8e]\n", i, sistema->pontos_x[i].num, sistema->pontos_x[i].anterior, sistema->pontos_x[i].posterior, i, sistema->pontos_y[i].num, sistema->pontos_y[i].anterior, sistema->pontos_y[i].posterior);
-    }
+    // for (int i = 0; i < (sistema->qntdPontos) ; i++) {
+    //     printf("X%d: %1.8e [%1.8e|%1.8e]  Y%d: %1.8e [%1.8e|%1.8e]\n", i, sistema->pontos_x[i].num, sistema->pontos_x[i].anterior, sistema->pontos_x[i].posterior, i, sistema->pontos_y[i].num, sistema->pontos_y[i].anterior, sistema->pontos_y[i].posterior);
+    // }
 
-    /*for (int i = 0; i < sistema->grauPol; i++) {
+    for (int i = 0; i < sistema->grauPol; i++) {
         for (int j = 0; j < sistema->grauPol; j++) {
             printf("%2.4lf ", sistema->matriz[i][j].num);
         }
         printf(" = %2.4lf\n", sistema->resultados[i].num);
-    }*/
+    }
 }
 
 // Desaloca toda a struct ajustePol
