@@ -11,7 +11,7 @@
 #include <likwid.h>
 
 // Aloca um vetor de structs operandos* de tamanho N e retorna um ponteiro para ele
-struct operandos* alocarVetor(int N) {
+struct operandos* alocarVetor(long long int N) {
 
     // Alocação dinâmica da vetor
     struct operandos *vet = (struct operandos *)malloc(N * sizeof(struct operandos));
@@ -25,7 +25,7 @@ struct operandos* alocarVetor(int N) {
 }
 
 // Aloca uma matriz de structs operandos* de tamanho NxN e retorna um ponteiro para ela
-struct operandos** alocarMatriz(int N) {
+struct operandos** alocarMatriz(long long int N) {
 
     // Alocação dinâmica da matriz
     struct operandos** matriz = (struct operandos**)malloc(N * sizeof(struct operandos*));
@@ -99,12 +99,12 @@ void calculaResiduos(struct ajustePol* sistema) {
     struct operandos residuos[sistema->qntdPontos], FXi, Yi;
 
     // Percorre pela tabela de pontos calculando o resíduo de cada f(Xi)
-    for (int i = 0; i < sistema->qntdPontos; i++) {
+    for (long long int i = 0; i < sistema->qntdPontos; i++) {
         Yi = sistema->tabelaPontos[2*i+1];
         FXi = polinomio(sistema, sistema->tabelaPontos[2*i]);
         residuos[i] = calcularSubtracao(Yi, FXi);
 
-        printf("[%1.8e,%1.8e]  ", residuos[i].anterior, residuos[i].posterior);
+        //printf("[%1.8e,%1.8e]  ", residuos[i].anterior, residuos[i].posterior);
     }
     printf("\n");
 

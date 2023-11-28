@@ -19,7 +19,7 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
         // ou seja, sobre os valores de A do sistema linear AX=B
         for (int j = 0; j < sistema->grauPol; j++) {
             sistema->matriz[i][j] = calcularIntervalo(0.0);
-            for(int k = 0; k < sistema->qntdPontos; k++) {
+            for(long long int k = 0; k < sistema->qntdPontos; k++) {
                 aux1 = calcularExpo(sistema->tabelaPontos[2*k], i);
                 aux2 = calcularExpo(sistema->tabelaPontos[2*k], j);
                 aux3 = calcularMultiplicacao(aux1,aux2);
@@ -30,7 +30,7 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
         // Aplica as operações aritméticas sobre os resultados de cada linha da matriz, 
         // ou seja, sobre os valores de B do sistema linear AX=B
         sistema->resultados[i] = calcularIntervalo(0.0);
-        for (int k = 0; k < sistema->qntdPontos; k++) {
+        for (long long int k = 0; k < sistema->qntdPontos; k++) {
             aux1 = calcularExpo(sistema->tabelaPontos[2*k], i);
             aux2 = calcularMultiplicacao(aux1,sistema->tabelaPontos[2*k+1]);
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);

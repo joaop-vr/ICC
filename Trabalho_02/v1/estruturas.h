@@ -57,7 +57,7 @@ struct operandos {
 ****************************/
 struct ajustePol {
     int grauPol;
-    int qntdPontos;
+    long long int qntdPontos;
     struct operandos** matriz;
     struct operandos* resultados;
     struct operandos* coeficientes;

@@ -43,9 +43,10 @@ struct operandos {
  * 
  * grauPol = grau do polinômio
  * qntdPontos = número de pontos da tabela
- * matriz = matriz com os coerficientes do sistema linear
+ * matriz = matriz com os coeficientes do sistema linear
  * coeficientes = vetor com os coeficientes do polinômio
- * tabelaPontpos = vetor com os valores de X e Y passados pelo usuário
+ * pontos_x = vetor com os valores de X passados pelo usuário
+ * pontos_y = vetor com os valores de Y passados pelo usuário
  * 
  * Obs.: O componente "vetPontos" está organizado de forma que:
  * X0 e Y0 estão nos indices 0 e 1 do vetor
@@ -57,11 +58,12 @@ struct operandos {
 ****************************/
 struct ajustePol {
     int grauPol;
-    long long int qntdPontos;
+    int qntdPontos;
     struct operandos** matriz;
     struct operandos* resultados;
     struct operandos* coeficientes;
-    struct operandos* tabelaPontos;
+    struct operandos* pontos_x;
+    struct operandos* pontos_y;
 };
 
 #endif

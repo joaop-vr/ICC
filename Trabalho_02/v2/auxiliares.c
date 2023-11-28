@@ -35,8 +35,10 @@ struct operandos** alocarMatriz(int N) {
         exit(1);
     }
 
-    for (int i = 0; i < N; i++) {
-        matriz[i] = (struct operandos*)malloc(N * sizeof(struct operandos));
+    matriz[0] = malloc(N * N * sizeof(struct operandos));
+
+    for (int i = 1; i < N; i++) {
+        matriz[i] = matriz[0] + i * N;
         if (!(matriz[i])) {
             fprintf(stderr, "Erro falha ao alocar vetor.\n");
             exit(1);
@@ -100,11 +102,11 @@ void calculaResiduos(struct ajustePol* sistema) {
 
     // Percorre pela tabela de pontos calculando o resíduo de cada f(Xi)
     for (int i = 0; i < sistema->qntdPontos; i++) {
-        Yi = sistema->tabelaPontos[2*i+1];
-        FXi = polinomio(sistema, sistema->tabelaPontos[2*i]);
+        Yi = sistema->pontos_y[i];
+        FXi = polinomio(sistema, sistema->pontos_x[i]);
         residuos[i] = calcularSubtracao(Yi, FXi);
 
-        printf("[%1.8e,%1.8e]  ", residuos[i].anterior, residuos[i].posterior);
+        //printf("[%1.8e,%1.8e]  ", residuos[i].anterior, residuos[i].posterior);
     }
     printf("\n");
 
