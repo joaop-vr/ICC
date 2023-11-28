@@ -16,6 +16,7 @@ int main() {
 
     // Aloca as estruturas de dados necessárias e guarda a tabela de pontos
     struct ajustePol* sistema = montarEstrutura();
+    imprimir(sistema);
     double start, end, tsolSL, tgeraSL;
     LIKWID_MARKER_START("minQuad");
 
