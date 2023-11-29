@@ -102,13 +102,24 @@ void calculaResiduos(struct ajustePol* sistema) {
     struct operandos FXi, Yi;
 
     // Percorre pela tabela de pontos calculando o resíduo de cada f(Xi)
-    for (int i = 0; i < sistema->qntdPontos; i++) {
+    for (int i = 0; i < sistema->qntdPontos - sistema->qntdPontos%4; i+=4) {
         Yi = sistema->pontos_y[i];
         FXi = polinomio(sistema, sistema->pontos_x[i]);
         residuos[i] = calcularSubtracao(Yi, FXi);
-
+        Yi = sistema->pontos_y[i+1];
+        FXi = polinomio(sistema, sistema->pontos_x[i+1]);
+        residuos[i+1] = calcularSubtracao(Yi, FXi);
+        Yi = sistema->pontos_y[i+2];
+        FXi = polinomio(sistema, sistema->pontos_x[i+2]);
+        residuos[i+2] = calcularSubtracao(Yi, FXi);
+        Yi = sistema->pontos_y[i+3];
+        FXi = polinomio(sistema, sistema->pontos_x[i+3]);
+        residuos[i+3] = calcularSubtracao(Yi, FXi);
         //printf("[%1.8e,%1.8e]  ", residuos[i].anterior, residuos[i].posterior);
     }
-    printf("\n");
-
+    for (int i = sistema->qntdPontos - sistema->qntdPontos%4; i < sistema->qntdPontos; i++) {
+        Yi = sistema->pontos_y[i];
+        FXi = polinomio(sistema, sistema->pontos_x[i]);
+        residuos[i] = calcularSubtracao(Yi, FXi);
+    }
 }

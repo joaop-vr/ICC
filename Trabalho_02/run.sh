@@ -14,13 +14,13 @@ cd v1
 make purge
 make
 
-for n in 64 128 200 256 512 600 800 1024 2000 3000 4096 6000 7000 10000 50000 100000 1000000 10000000 100000000
+for n in 64 128 200 256 512 600 800 1024 2000 3000 4096 6000 7000 10000 50000 100000
+# for n in 64 128 200 256 512 600 800 1024 2000 3000 4096 6000 7000 10000 50000 100000 1000000 10000000 100000000
 do
     echo -n "$n " >> ../time_v1.dat
     echo "Executando ajustePol_v1 com $n e pegando tempo..."
-    # echo "rodando matriz $n para funcao $function"
-    ./gera_entrada $n | ./ajustePol_v1 >> time_v1.dat
-    echo >> time_v1.dat
+    ./gera_entrada $n | ./ajustePol_v1 >> ../time_v1.dat
+    # echo >> time_v1.dat
 
     echo -n "$n " >> ../mem_v1.dat
     echo "Executando ajustePol_v1 com $n e pegando memoria..."
@@ -42,13 +42,14 @@ cd ../v2
 make purge
 make
 
-for n in 64 128 200 256 512 600 800 1024 2000 3000 4096 6000 7000 10000 50000 100000 1000000 10000000 100000000
+#for n in 64 128 200 256 512 600 800 1024 2000 3000 4096 6000 7000 10000 50000 100000 1000000 10000000 100000000
+for n in 64 128 200 256 512 600 800 1024 2000 3000 4096 6000 7000 10000 50000 100000
 do
     echo -n "$n " >> ../time_v2.dat
     echo "Executando ajustePol_v2 com $n e pegando tempo..."
     # echo "rodando matriz $n para funcao $function"
     ./gera_entrada $n | ./ajustePol_v2 >> ../time_v2.dat
-    echo >> ../time_v2.dat
+    # echo >> ../time_v2.dat
 
     echo -n "$n " >> ../mem_v2.dat
     echo "Executando ajustePol_v2 com $n e pegando memoria..."
@@ -65,6 +66,6 @@ do
     ./gera_entrada $n | likwid-perfctr -O -C 3 -g FLOPS_DP -m ./ajustePol_v2 | grep "DP " | cut -d',' -f2 | tr "\n" " " >> ../flops_v2.dat
     echo >> ../flops_v2.dat
 done
-
+cd ..
 ./gera_graficos.gp
 echo "powersave" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor

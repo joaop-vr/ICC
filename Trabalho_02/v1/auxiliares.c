@@ -107,6 +107,4 @@ void calculaResiduos(struct ajustePol* sistema) {
 
         //printf("[%1.8e,%1.8e]  ", residuos[i].anterior, residuos[i].posterior);
     }
-    printf("\n");
-
 }
