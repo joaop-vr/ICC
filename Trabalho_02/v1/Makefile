@@ -23,8 +23,19 @@ auxiliares.o: auxiliares.h auxiliares.c
 minimosQuadrados.o: minimosQuadrados.h minimosQuadrados.c
 	gcc -c minimosQuadrados.c $(parametrosCompilacao)
 
+debug:	CFLAGS += -g -D_DEBUG_
+debug:	$(nomePrograma)
+
+.PHONY: all debug clean purge
+
 clean:
 	-rm -f $(objs) *~ $(nomePrograma)
 
 purge: clean
 	-rm -f $(nomePrograma)
+
+dist: purge
+	@echo "Gerando arquivo de distribuição ($(DISTDIR).tar) ..."
+	@ln -s . $(DISTDIR)
+	@tar -cvf $(DISTDIR).tar $(addprefix ./$(DISTDIR)/, $(DISTFILES))
+	@rm -f $(DISTDIR)

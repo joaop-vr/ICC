@@ -36,12 +36,14 @@ int main() {
     LIKWID_MARKER_STOP("gauss");
     tsolSL = end-start;
 
-    imprimir(sistema);
+    #ifdef DEBUG
+        imprimir(sistema);
     
     // Imprime os coeficientes do polinômio
-    for (int i = 0; i < sistema->grauPol; i++)
-        printf("[%1.8e,%1.8e]  ", sistema->coeficientes[i].anterior, sistema->coeficientes[i].posterior);
-    printf("\n");
+        for (int i = 0; i < sistema->grauPol; i++)
+            printf("[%1.8e,%1.8e]  ", sistema->coeficientes[i].anterior, sistema->coeficientes[i].posterior);
+        printf("\n");
+    #endif
 
     // Calcula e imprime os resíduos
     LIKWID_MARKER_START("residuos");
