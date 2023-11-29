@@ -72,5 +72,5 @@ do
 done
 
 cd ..
-./gera_graficos.gp
+#./gera_graficos.gp
 echo "powersave" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor

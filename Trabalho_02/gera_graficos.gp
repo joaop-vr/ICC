@@ -47,6 +47,7 @@ plot 'dados/time_v1.dat' using 1:4 title "v1" with linespoints, \
 
 pause -1
 
+unset logscale y
 set ylabel "MFLOP/s"
 set output "FLOPS_DP.png"
 set title "FLOPS (gerar)"
