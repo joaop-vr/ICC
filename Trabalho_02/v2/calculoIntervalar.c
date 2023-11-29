@@ -247,3 +247,23 @@ struct operandos calcularExpo(struct operandos x, int expoente) {
     return resultado;
 
 }
+
+struct operandos calcularExpoOtimizado(struct operandos x, int expoente) { 
+ 
+    struct operandos resultado; 
+    double baseAnt, basePost; 
+ 
+    baseAnt = x.anterior; 
+    basePost = x.posterior; 
+ 
+    resultado.num = (double) pow(x.num, expoente); 
+ 
+    fesetround(FE_DOWNWARD); 
+    resultado.anterior = (double) pow(baseAnt, expoente); 
+ 
+    fesetround(FE_UPWARD); 
+    resultado.posterior = (double) pow(basePost, expoente); 
+ 
+    return resultado; 
+ 
+}

@@ -25,28 +25,28 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
 
             // Unroll+Jam na quantidade de pontos
             for(int k = 0; k < sistema->qntdPontos-sistema->qntdPontos%4; k+=4) {
-                aux1 = calcularExpo(sistema->pontos_x[k], i);
-                aux2 = calcularExpo(sistema->pontos_x[k], j);
+                aux1 = calcularExpoOtimizado(sistema->pontos_x[k], i);
+                aux2 = calcularExpoOtimizado(sistema->pontos_x[k], j);
                 aux3 = calcularMultiplicacao(aux1,aux2);
                 sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
-                aux1 = calcularExpo(sistema->pontos_x[k+1], i);
-                aux2 = calcularExpo(sistema->pontos_x[k+1], j);
+                aux1 = calcularExpoOtimizado(sistema->pontos_x[k+1], i);
+                aux2 = calcularExpoOtimizado(sistema->pontos_x[k+1], j);
                 aux3 = calcularMultiplicacao(aux1,aux2);
                 sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
-                aux1 = calcularExpo(sistema->pontos_x[k+2], i);
-                aux2 = calcularExpo(sistema->pontos_x[k+2], j);
+                aux1 = calcularExpoOtimizado(sistema->pontos_x[k+2], i);
+                aux2 = calcularExpoOtimizado(sistema->pontos_x[k+2], j);
                 aux3 = calcularMultiplicacao(aux1,aux2);
                 sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
-                aux1 = calcularExpo(sistema->pontos_x[k+3], i);
-                aux2 = calcularExpo(sistema->pontos_x[k+3], j);
+                aux1 = calcularExpoOtimizado(sistema->pontos_x[k+3], i);
+                aux2 = calcularExpoOtimizado(sistema->pontos_x[k+3], j);
                 aux3 = calcularMultiplicacao(aux1,aux2);
                 sistema->matriz[i][j] = calcularSoma(sistema->matriz[i][j], aux3);
             }
 
             // Resíduo do Unroll+Jam
             for (int k = sistema->qntdPontos-sistema->qntdPontos%4; k < sistema->qntdPontos; k++){
-                aux1 = calcularExpo(sistema->pontos_x[k], i);
-                aux2 = calcularExpo(sistema->pontos_x[k], j);
+                aux1 = calcularExpoOtimizado(sistema->pontos_x[k], i);
+                aux2 = calcularExpoOtimizado(sistema->pontos_x[k], j);
                 aux3 = calcularMultiplicacao(aux1,aux2);
             }
         }
@@ -56,23 +56,23 @@ struct ajustePol* minimosQuadrados(struct ajustePol* sistema) {
         sistema->resultados[i] = calcularIntervalo(0.0);
         // Unroll+Jam na quantidade de pontos
         for (int k = 0; k < sistema->qntdPontos-sistema->qntdPontos%4; k+=4) {
-            aux1 = calcularExpo(sistema->pontos_x[k], i);
+            aux1 = calcularExpoOtimizado(sistema->pontos_x[k], i);
             aux2 = calcularMultiplicacao(aux1,sistema->pontos_y[k]);
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
-            aux1 = calcularExpo(sistema->pontos_x[k+1], i);
+            aux1 = calcularExpoOtimizado(sistema->pontos_x[k+1], i);
             aux2 = calcularMultiplicacao(aux1,sistema->pontos_y[k+1]);
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
-            aux1 = calcularExpo(sistema->pontos_x[k+2], i);
+            aux1 = calcularExpoOtimizado(sistema->pontos_x[k+2], i);
             aux2 = calcularMultiplicacao(aux1,sistema->pontos_y[k+2]);
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
-            aux1 = calcularExpo(sistema->pontos_x[k+3], i);
+            aux1 = calcularExpoOtimizado(sistema->pontos_x[k+3], i);
             aux2 = calcularMultiplicacao(aux1,sistema->pontos_y[k+3]);
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
         }
         
         // Resíduo do Unroll+Jam
         for (int k = sistema->qntdPontos-sistema->qntdPontos%4; k < sistema->qntdPontos; k++){
-            aux1 = calcularExpo(sistema->pontos_x[k], i);
+            aux1 = calcularExpoOtimizado(sistema->pontos_x[k], i);
             aux2 = calcularMultiplicacao(aux1,sistema->pontos_y[k]);
             sistema->resultados[i] = calcularSoma(sistema->resultados[i], aux2);
         }
