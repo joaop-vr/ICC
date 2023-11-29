@@ -115,7 +115,6 @@ void calculaResiduos(struct ajustePol* sistema) {
         Yi = sistema->pontos_y[i+3];
         FXi = polinomio(sistema, sistema->pontos_x[i+3]);
         residuos[i+3] = calcularSubtracao(Yi, FXi);
-        //printf("[%1.8e,%1.8e]  ", residuos[i].anterior, residuos[i].posterior);
     }
     for (int i = sistema->qntdPontos - sistema->qntdPontos%4; i < sistema->qntdPontos; i++) {
         Yi = sistema->pontos_y[i];
