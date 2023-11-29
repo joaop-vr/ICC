@@ -24,6 +24,8 @@ Para executar o programa, foi feito um arquivo script "run.sh". Este script entr
 
 A pasta "dados" conterá todos os dados necessários para geração dos gráficos, após a execução de ambos os programas. Os dados foram organizados em formato {metrica}_{versao}.dat, em que "metrica" é a métrica utilizada, como "tempo", "cache", ou "flops", por exemplo, e "versao" é a versão do programa, podendo ser "v1" ou "v2".
 
+O script "gera_graficos.gp" deve ser executado para gerar os 10 gráficos necessários. O script utiliza os arquivos de dados localizados dentro da pasta "dados", e salva todos os gráficos como imagem, em formato png. 
+
 Compartimentado em 5 bibliotecas (estruturas.h, operaEstrutura.h, minimosQuadrados.h, calculoIntervalar.h, auxiliares.h), o processo se inicia na função main (main.c).
 
 # Estruturas
