@@ -1,7 +1,5 @@
 # Trabalho 02 - Otimização do Ajuste Polinomial de Curvas com Cálculo Intervalar
 
-O objetivo deste trabalho é otimizar a implementação um programa para calcular um polinômio de grau N que se ajuste a uma curva descrita por K pontos, utilizando aritmética intervalar para representação rigorosa dos valores reais.
-
 ## Índice
 
 - [Autores]
@@ -16,13 +14,15 @@ Mateus Kater Pombeiro - 20190366
 
 ## Descrição
 
-O trabalho consiste em calcular um ajuste de curva polinomial f(x) de grau N a partir de uma tabela de K pontos (x,y).
-
-Devem ser calculados os coeficientes ai do polinômio f(x) = a0 + a1.x + a2.x2 + (…) + aN.xN utilizando-se do Método dos Mínimos Quadrados. O método da Eliminação de Gauss com pivoteamento parcial deve ser usado para resolver os sistemas lineares provenientes do método.
-Para manter a representação rigorosa, todos os valores reais no programa devem ser representados por intervalos.
-O programa recebe como entrada a quantidade N de pontos da tabela (1ª linha) e a tabela com os pontos (x,f(x)) do tipo double, um par de coordenadas por linha.
+O trabalho 2 consiste em implementar modificações ao trabalho 1, a fim de otimizar sua execução. Foram aplicadas alterações como Loop Unrolling, otimização de acesso à cache, redução de operações aritmética, redução de chamada de funções, etc.
 
 ## O Programa
+
+O programa foi separado em 2 pastas, "v1" e "v2". A pasta v1 contém o Trabalho 1 (não otimizado), e a pasta v2 contém a versão otimizada do Trabalho 1, com modificações. Ambas as pastas contêm seu próprio Makefile, adaptado para cada versão.
+
+Para executar o programa, foi feito um arquivo script "run.sh". Este script entra em cada uma das pastas (v1 e v2), compila o programa gera_entrada (fornecido pelos professores), compila os arquivos necessários, executa testes com múltiplas quantidades de pontos e exporta os dados coletados para a pasta "dados", sendo necessário apenas a execução do script, para a execução integral do trabalho.
+
+A pasta "dados" conterá todos os dados necessários para geração dos gráficos, após a execução de ambos os programas. Os dados foram organizados em formato {metrica}_{versao}.dat, em que "metrica" é a métrica utilizada, como "tempo", "cache", ou "flops", por exemplo, e "versao" é a versão do programa, podendo ser "v1" ou "v2".
 
 Compartimentado em 5 bibliotecas (estruturas.h, operaEstrutura.h, minimosQuadrados.h, calculoIntervalar.h, auxiliares.h), o processo se inicia na função main (main.c).
 
@@ -75,4 +75,4 @@ Compartimentado em 5 bibliotecas (estruturas.h, operaEstrutura.h, minimosQuadrad
 
 ## Limitações
 
-Durante os testes não foram detectadas limitações do programa. Tais testes conrespondem ao arquivo teste.in disponibilizado pelo professor.
+Durante os testes não foram detectadas limitações do programa. Tais testes correspondem ao arquivo teste.in disponibilizado pelo professor.
