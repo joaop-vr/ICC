@@ -5,11 +5,11 @@ make purge
 make
 gcc ../gera_entrada.c -o gera_entrada
 # ./ajustePol_v1 < ../testes/pontosSlide.in
-./gera_entrada 1000000 | ./ajustePol_v1 
+./gera_entrada 10000 | ./ajustePol_v1 
 
 cd ../v2
 make purge
 make
 gcc ../gera_entrada.c -o gera_entrada
 # ./ajustePol_v2 < ../testes/pontosSlide.in
-./gera_entrada 1000000 | ./ajustePol_v2
+./gera_entrada 10000 | ./ajustePol_v2

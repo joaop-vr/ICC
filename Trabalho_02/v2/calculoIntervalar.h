@@ -37,4 +37,5 @@ struct operandos calcularDivisao(struct operandos x, struct operandos y);
 // Retorno: struct operandos com o resultado da exponenciação de X por i e seus intervalos
 struct operandos calcularExpo(struct operandos x, int expoente);
 
+struct operandos calcularExpoOtimizado(struct operandos x, int expoente);
 #endif
