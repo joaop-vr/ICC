@@ -1,6 +1,6 @@
-# Trabalho 01 - Ajuste Polinomial de Curvas com Cálculo Intervalar
+# Trabalho 02 - Otimização do Ajuste Polinomial de Curvas com Cálculo Intervalar
 
-O objetivo deste trabalho é implementar um programa para calcular um polinômio de grau N que se ajuste a uma curva descrita por K pontos, utilizando aritmética intervalar para representação rigorosa dos valores reais.
+O objetivo deste trabalho é otimizar a implementação um programa para calcular um polinômio de grau N que se ajuste a uma curva descrita por K pontos, utilizando aritmética intervalar para representação rigorosa dos valores reais.
 
 ## Índice
 
