@@ -26,7 +26,7 @@ struct ajustePol* montarEstrutura() {
     }
 
     // Lê a quantidade de pontos
-    if (scanf("%d", &qntdPontos) != 1) {
+    if (scanf("%lld", &qntdPontos) != 1) {
         fprintf(stderr, "Erro na leitura de quantidade de pontos.\n");
         exit(1);
     }
@@ -82,7 +82,7 @@ void preencherEstrutura(struct ajustePol* sistema) {
 void imprimir(struct ajustePol* sistema) {
 
     printf("Grau: %d\n", sistema->grauPol);
-    printf("Quantidade de pontos: %ld\n", sistema->qntdPontos);
+    printf("Quantidade de pontos: %lld\n", sistema->qntdPontos);
 
     for (int i = 0; i < sistema->grauPol; i++) {
         for (int j = 0; j < sistema->grauPol; j++) {

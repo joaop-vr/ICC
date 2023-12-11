@@ -16,7 +16,6 @@ int main() {
 
     // Aloca as estruturas de dados necessárias e guarda a tabela de pontos
     struct ajustePol* sistema = montarEstrutura();
-    // imprimir(sistema);
     double start, end, tsolSL, tgeraSL, tResSL;
     LIKWID_MARKER_START("minQuad");
 
@@ -24,7 +23,6 @@ int main() {
     sistema = minimosQuadrados(sistema); //Aplica o método dos mínimos quadrados para ajuste de curva
     end = timestamp();
 
-    // imprimir(sistema);
 
     LIKWID_MARKER_STOP("minQuad");
     tgeraSL = end-start;
